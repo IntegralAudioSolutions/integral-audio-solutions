@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Integral Audio Solutions Ltd</title>
+  <meta name="description" content="Published credits from Integral Audio Solutions Ltd — Fortnite, Half-Life: Alyx, Mortal Kombat 11, Battlefield 1, Cuphead and more.">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0a0e14;
+      --surface:  #111827;
+      --surface-2:#1a2332;
+      --cyan:     #00d4ff;
+      --violet:   #7c3aed;
+      --text:     #e2e8f0;
+      --muted:    #64748b;
+      --border:   rgba(0,212,255,0.12);
+      --font:     'Orbitron','Courier New',monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 48px;
+      background: rgba(10,14,20,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-decoration: none;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #e2e8f0 0%, #7a9ab5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: linear-gradient(180deg, #00d4ff 0%, #0090b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── PAGE LAYOUT ─────────────────────────────────────────── */
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 90px 48px 96px;
+    }
+
+    /* ── PAGE HEADER ─────────────────────────────────────────── */
+    .page-header {
+      margin-bottom: 56px;
+    }
+
+    .page-label {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 6px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-size: clamp(22px, 3vw, 36px);
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .page-title span { color: var(--cyan); }
+
+    .page-divider {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--cyan) 50%, transparent 100%);
+      opacity: 0.38;
+      margin-bottom: 14px;
+    }
+
+    .page-intro {
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      line-height: 2.2;
+      max-width: 640px;
+    }
+
+    /* ── FILTER TABS ─────────────────────────────────────────── */
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .filter-btn {
+      font-family: var(--font);
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: rgba(0,212,255,0.4);
+      color: var(--cyan);
+      background: rgba(0,212,255,0.05);
+    }
+
+    /* ── PROJECTS GRID ───────────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0,212,255,0.35);
+      background: var(--surface-2);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .project-card:hover::before { opacity: 1; }
+
+    /* Image area */
+    .project-img {
+      width: 100%;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--surface-2);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* Dark scrim over image */
+    .project-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(10,14,20,0.1) 0%,
+        rgba(10,14,20,0.5) 100%);
+    }
+
+    /* Tag overlaid on image */
+    .project-type {
+      position: absolute;
+      bottom: 12px;
+      left: 16px;
+      z-index: 1;
+      font-size: 7px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      border: 1px solid rgba(0,212,255,0.3);
+      background: rgba(10,14,20,0.7);
+      padding: 4px 10px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Text area */
+    .project-body {
+      padding: 24px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .project-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text);
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .project-studio {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      opacity: 0.8;
+    }
+
+    .project-role {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      border-left: 2px solid rgba(0,212,255,0.25);
+      padding-left: 10px;
+      line-height: 1.6;
+    }
+
+    .project-desc {
+      font-size: 9px;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      line-height: 2;
+      opacity: 0.85;
+    }
+
+    /* ── CTA BAND ────────────────────────────────────────────── */
+    .cta-band {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 56px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      margin-top: 80px;
+    }
+
+    .cta-label {
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+
+    .cta-title {
+      font-size: clamp(14px, 2vw, 20px);
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text);
+    }
+
+    .btn-cta {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border: 1px solid var(--cyan);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--cyan);
+      font-family: var(--font);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-cta:hover { background: var(--cyan); color: var(--bg); }
+    .btn-cta svg { transition: transform 0.25s; }
+    .btn-cta:hover svg { transform: translateX(4px); }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-name {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      color: var(--muted);
+    }
+
+    .footer-copy {
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .cta-band { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 20px; }
+      .page-wrap { padding: 100px 20px 64px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrap">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="page-label">Published Credits</div>
+      <div class="page-divider"></div>
+      <h1 class="page-title">
+        A track record built across<br>
+        <span>some of the world's biggest titles.</span>
+      </h1>
+      <p class="page-intro">
+        Over a decade of published credits spanning AAA shooters, fighting games,
+        VR experiences, and indie titles — delivered for studios including Epic Games,
+        DICE, Valve, and NetherRealm Studios.
+      </p>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-row">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="aaa">AAA</button>
+      <button class="filter-btn" data-filter="indie">Indie</button>
+      <button class="filter-btn" data-filter="vr">VR</button>
+      <button class="filter-btn" data-filter="epic">Epic Games</button>
+    </div>
+
+    <!-- Projects -->
+    <div class="projects-grid" id="projects-grid">
+
+      <div class="project-card" data-tags="aaa epic">
+        <div class="project-img" style="background-image:url('../assets/images/fnbr-keyart.png')">
+          <div class="project-type">World-Building · UE5</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Fortnite Battle Royale</div>
+          <div class="project-studio">Epic Games</div>
+          <div class="project-role">Audio Designer — Map Audio</div>
+          <p class="project-desc">
+            Six years of map audio design on one of the world's most played
+            live-service games. Responsible for the environmental and spatial
+            audio across Battle Royale map iterations, working within Unreal
+            Engine 5 and the full Wwise pipeline at production scale.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa epic">
+        <div class="project-img" style="background-image:url('../assets/images/fnstw-keyart.png')">
+          <div class="project-type">Technical Sound · Wwise</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Fortnite Save the World</div>
+          <div class="project-studio">Epic Games</div>
+          <div class="project-role">Technical Sound Designer</div>
+          <p class="project-desc">
+            Wwise integration and asset pipeline work for Epic's co-op
+            survival title. Focused on SoundBank architecture, Blueprint
+            AK node implementation, and maintaining consistency across
+            a large and evolving audio asset library.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa epic">
+        <div class="project-img" style="background-image:url('../assets/images/ballistic-keyart.png')">
+          <div class="project-type">UEFN · World-Building</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Ballistic (UEFN)</div>
+          <div class="project-studio">Epic Games</div>
+          <div class="project-role">Audio Designer</div>
+          <p class="project-desc">
+            World-building audio and implementation for Fortnite's
+            first-person shooter mode, built natively within Unreal
+            Editor for Fortnite. Platform-native experience directly
+            transferable to UE6 pipeline architecture.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa">
+        <div class="project-img" style="background-image:url('../assets/images/mk11-keyart.png')">
+          <div class="project-type">Dialogue · Pipeline</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Mortal Kombat 11</div>
+          <div class="project-studio">NetherRealm Studios</div>
+          <div class="project-role">Dialogue Supervisor</div>
+          <p class="project-desc">
+            Full dialogue pipeline oversight for one of the best-selling
+            fighting game franchises. Responsibilities covered session
+            supervision, editorial pipeline management, and final delivery
+            across a large cast of characters and localisation requirements.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa">
+        <div class="project-img" style="background-image:url('../assets/images/injustice2-keyart.png')">
+          <div class="project-type">Cinematic · Sound Design</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Injustice 2</div>
+          <div class="project-studio">NetherRealm Studios</div>
+          <div class="project-role">Cinematic Sound Designer</div>
+          <p class="project-desc">
+            Sound design for the cinematic sequences of NetherRealm's
+            superhero fighting title. Crafting high-impact audio for
+            DC character encounters, cutscenes, and the game's
+            signature story mode presentation.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa vr">
+        <div class="project-img" style="background-image:url('../assets/images/alyx-keyart.png')">
+          <div class="project-type">VR · Foley</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Half-Life: Alyx</div>
+          <div class="project-studio">Valve</div>
+          <div class="project-role">Supervising Foley Editor (Outsource)</div>
+          <p class="project-desc">
+            Foley editorial supervision on Valve's landmark VR title.
+            Working in a VR-first audio context demands precision in
+            spatial grounding — every footstep, material interaction,
+            and physical gesture needs to hold up under full head-tracked
+            immersion.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa">
+        <div class="project-img" style="background-image:url('../assets/images/bf1-keyart.png')">
+          <div class="project-type">Sound Design · Dialogue</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Battlefield 1</div>
+          <div class="project-studio">DICE / EA</div>
+          <div class="project-role">Additional Sound Design &amp; Dialogue Editor</div>
+          <p class="project-desc">
+            Additional sound design and dialogue editorial on DICE's
+            WWI-era Battlefield entry. Contributing to the dense,
+            atmospheric audio signature that defined the title's
+            critically acclaimed audio presentation.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa">
+        <div class="project-img" style="background-image:url('../assets/images/mirrorsedge-keyart.png')">
+          <div class="project-type">Dialogue · Localisation</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Mirror's Edge Catalyst</div>
+          <div class="project-studio">DICE / EA</div>
+          <div class="project-role">Region Dialogue Editor / Mixer</div>
+          <p class="project-desc">
+            Localisation dialogue editing and mixing for DICE's
+            open-world parkour title. Managing regional audio pipelines
+            across multiple languages while maintaining performance
+            consistency and mix integrity throughout.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa epic">
+        <div class="project-img" style="background-image:url('../assets/images/paragon-keyart.png')">
+          <div class="project-type">Sound Design · Dialogue</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Paragon</div>
+          <div class="project-studio">Epic Games</div>
+          <div class="project-role">Additional Sound Design &amp; Dialogue Editor</div>
+          <p class="project-desc">
+            Additional sound design and dialogue editorial work on
+            Epic's MOBA title. Contributing across a diverse hero
+            roster with distinct audio identities, within the
+            Unreal Engine production pipeline.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="aaa">
+        <div class="project-img" style="background-image:url('../assets/images/ascent-keyart.png')">
+          <div class="project-type">World-Building · Atmosphere</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">The Ascent</div>
+          <div class="project-studio">Neon Giant</div>
+          <div class="project-role">Sound Designer</div>
+          <p class="project-desc">
+            Environmental and world-building audio for Neon Giant's
+            cyberpunk action RPG. Building the oppressive, industrial
+            sonic atmosphere of the Veles megacorp cityscape —
+            dense, layered, and relentlessly immersive.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="vr">
+        <div class="project-img" style="background-image:url('../assets/images/apes-keyart.png')">
+          <div class="project-type">VR · Technical Sound</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Crisis on the Planet of the Apes VR</div>
+          <div class="project-studio">Imaginati Studios</div>
+          <div class="project-role">Technical Sound Designer</div>
+          <p class="project-desc">
+            VR spatial audio implementation for this licensed action
+            title. Designing and implementing audio systems that hold
+            up under the heightened physical presence and spatial
+            awareness demands of virtual reality gameplay.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="vr">
+        <div class="project-img" style="background-image:url('../assets/images/marvel-keyart.png')">
+          <div class="project-type">VR · Action Systems</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Marvel Powers United VR</div>
+          <div class="project-studio">Sanzuru Games</div>
+          <div class="project-role">Technical Sound Designer</div>
+          <p class="project-desc">
+            Audio systems design for Sanzuru's VR superhero action
+            title featuring the Marvel roster. Building the
+            power fantasy audio — the visceral impact, energy
+            signatures, and spatial presence that makes playing
+            as a superhero feel convincing in VR.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="indie">
+        <div class="project-img" style="background-image:url('../assets/images/cuphead-keyart.png')">
+          <div class="project-type">Sound Design · Stylised</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Cuphead</div>
+          <div class="project-studio">Studio MDHR</div>
+          <div class="project-role">Sound Designer</div>
+          <p class="project-desc">
+            Sound design for Studio MDHR's acclaimed 1930s
+            cartoon-style run-and-gun. Crafting stylised SFX
+            faithful to the hand-drawn animation aesthetic —
+            every hit, projectile, and boss encounter
+            grounded in the era's exaggerated sonic language.
+          </p>
+        </div>
+      </div>
+
+      <div class="project-card" data-tags="indie">
+        <div class="project-img" style="background-image:url('../assets/images/smoke-keyart.png')">
+          <div class="project-type">Technical Sound · Implementation</div>
+        </div>
+        <div class="project-body">
+          <div class="project-title">Smoke and Sacrifice</div>
+          <div class="project-studio">Solar Sail Games</div>
+          <div class="project-role">Technical Sound Designer</div>
+          <p class="project-desc">
+            Full audio implementation for Solar Sail's indie RPG —
+            from asset integration to middleware pipeline setup.
+            Delivering AAA-quality technical rigour to an
+            independent production, helping a small team
+            punch well above their weight sonically.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-band">
+      <div>
+        <div class="cta-label">Work With Us</div>
+        <div class="cta-title">Add your title to this list.</div>
+      </div>
+      <a href="contact.html" class="btn-cta">
+        Send an Enquiry
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Integral Audio Solutions Ltd</div>
+    <div class="footer-copy">Registered in England &amp; Wales · Est. 2023</div>
+  </footer>
+
+  <script>
+    /* ── Filter functionality ────────────────────────────────── */
+    const btns  = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          if (filter === 'all') {
+            card.style.display = '';
+          } else {
+            const tags = card.dataset.tags || '';
+            card.style.display = tags.includes(filter) ? '' : 'none';
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
