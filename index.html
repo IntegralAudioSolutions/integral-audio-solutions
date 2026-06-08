@@ -502,10 +502,10 @@
       margin: 0 auto;
     }
 
-    /* 3 columns — wider cards, more visual weight per title */
+    /* 4 columns — original layout */
     .credits-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
@@ -513,7 +513,7 @@
     .credit-card {
       position: relative;
       width: 100%;
-      height: 300px;
+      height: 260px;
       background: var(--surface);
       border: 1px solid var(--border);
       cursor: pointer;
@@ -748,9 +748,9 @@
       section { padding: 64px 20px; }
 
       .credits-section { padding: 0 20px 24px; }
-      /* 1 column on mobile — full bleed impact */
-      .credits-grid { grid-template-columns: repeat(1, 1fr); gap: 12px; }
-      .credit-card { height: 260px; }
+      /* 2 columns on mobile */
+      .credits-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .credit-card { height: 200px; }
 
       .about-stats { flex-wrap: wrap; }
       .stat {
@@ -833,33 +833,14 @@
   <div class="credits-section" id="credits">
     <div class="credits-grid" id="credits-grid">
 
-      <div class="credit-card has-image" style="background-image: url('assets/images/fnbr-keyart.jpg');">
-        <div class="credit-card-tag">Epic Games</div>
+      <div class="credit-card has-image" style="background-image: url('assets/images/c6-galactic-battle-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
         <div class="credit-card-text">
-          <div class="credit-title">Fortnite<br>Battle Royale</div>
-          <div class="credit-studio">Audio Designer · Map Audio</div>
-          <div class="credit-role">2019–2026 · Unreal Engine 5 · Large-scale world audio</div>
+          <div class="credit-title">Fortnite —<br>Galactic Battle</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Audio Designer / Map Audio Design<br>
-          2019–2026 · Unreal Engine 5<br>
-          Large-scale Battle Royale world audio.
-        </div>
-      </div>
-
-      <div class="credit-card has-image" style="background-image: url('assets/images/fnstw-keyart.jpg'); background-position: top;">
-        <div class="credit-card-tag">Epic Games</div>
-        <div class="credit-card-text">
-          <div class="credit-title">Fortnite<br>Save the World</div>
-          <div class="credit-studio">Technical Sound Designer</div>
-          <div class="credit-role">Wwise integration &amp; asset pipeline</div>
-        </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Technical Sound Designer<br>
-          Wwise integration &amp; asset pipeline.
-        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
       </div>
 
       <div class="credit-card has-image" style="background-image: url('assets/images/alyx-keyart.png');">
@@ -867,41 +848,29 @@
         <div class="credit-card-text">
           <div class="credit-title">Half-Life: Alyx</div>
           <div class="credit-studio">Supervising Foley Editor</div>
-          <div class="credit-role">VR-first Foley editorial supervision (Outsource)</div>
+          <div class="credit-role">VR-first Foley editorial supervision</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Supervising Foley Editor (Outsource)<br>
-          VR-first Foley editorial supervision.
-        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Supervising Foley Editor (Outsource)<br>VR-first Foley editorial supervision.</div>
       </div>
 
-      <div class="credit-card has-image" style="background-image: url('assets/images/mortal-kombat-11-keyart.jpg');">
-        <div class="credit-card-tag">NetherRealm Studios</div>
+      <div class="credit-card has-image" style="background-image: url('assets/images/c4s5-fortnite-og-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
         <div class="credit-card-text">
-          <div class="credit-title">Mortal Kombat 11</div>
-          <div class="credit-studio">Dialogue Supervisor</div>
-          <div class="credit-role">Full dialogue pipeline oversight</div>
+          <div class="credit-title">Fortnite OG</div>
+          <div class="credit-studio">Audio Level Designer</div>
+          <div class="credit-role">Map audio design</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Dialogue Supervisor<br>
-          Full dialogue pipeline oversight.
-        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Level Designer<br>Sweet Justice Sound Group for Epic Games.</div>
       </div>
 
-      <div class="credit-card has-image" style="background-image: url('assets/images/injustice2-keyart.jpg');">
-        <div class="credit-card-tag">NetherRealm Studios</div>
+      <div class="credit-card has-image" style="background-image: url('assets/images/c4s2-mega-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
         <div class="credit-card-text">
-          <div class="credit-title">Injustice 2</div>
-          <div class="credit-studio">Supervising Foley Editor</div>
-          <div class="credit-role">Cinematic Foley supervision</div>
+          <div class="credit-title">Fortnite — Chapter 4<br>Season 2</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Supervising Foley Editor<br>
-          Cinematic Foley supervision.
-        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
       </div>
 
       <div class="credit-card has-image" style="background-image: url('assets/images/bf1-keyart.png');">
@@ -909,27 +878,9 @@
         <div class="credit-card-text">
           <div class="credit-title">Battlefield 1</div>
           <div class="credit-studio">Technical Sound Designer</div>
-          <div class="credit-role">WWI environmental and ambient design</div>
+          <div class="credit-role">Additional sound design &amp; dialogue editing</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Technical Sound Designer<br>
-          WWI environmental and ambient design.
-        </div>
-      </div>
-
-      <div class="credit-card has-image" style="background-image: url('assets/images/mirrorsedge-keyart.png');">
-        <div class="credit-card-tag">DICE / EA</div>
-        <div class="credit-card-text">
-          <div class="credit-title">Mirror's Edge<br>Catalyst</div>
-          <div class="credit-studio">Sound Designer</div>
-          <div class="credit-role">Open-world traversal audio design</div>
-        </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Sound Designer<br>
-          Open-world traversal audio design.
-        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Additional Sound Design &amp; Dialogue Editor<br>DICE / EA.</div>
       </div>
 
       <div class="credit-card has-image" style="background-image: url('assets/images/cuphead-keyart.png');">
@@ -939,11 +890,177 @@
           <div class="credit-studio">Sound Designer</div>
           <div class="credit-role">Hand-drawn jazz-era SFX design</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Sound Designer<br>
-          Hand-drawn jazz-era SFX design.
+        <div class="credit-tooltip"><strong>Role</strong>Sound Designer<br>Hand-drawn jazz-era SFX design.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/ascent-keyart.jpg');">
+        <div class="credit-card-tag">Neon Giant</div>
+        <div class="credit-card-text">
+          <div class="credit-title">The Ascent</div>
+          <div class="credit-studio">Sound Designer</div>
+          <div class="credit-role">Cyberpunk world audio design</div>
         </div>
+        <div class="credit-tooltip"><strong>Role</strong>Sound Designer<br>Neon Giant.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/ballistic-keyart.jpg');">
+        <div class="credit-card-tag">Epic Games</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Ballistic (UEFN)</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">UEFN map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/mirrorsedge-keyart.png');">
+        <div class="credit-card-tag">DICE / EA</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Mirror's Edge<br>Catalyst</div>
+          <div class="credit-studio">Dialogue Editor / Mixer</div>
+          <div class="credit-role">Region dialogue editing and mixing</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Region Dialogue Editor / Mixer<br>DICE / EA.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c5s1-underground-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 5<br>Season 1</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c5s4-absolute-doom-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 5<br>Season 4</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c5s2-myths-and-mortals-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 5<br>Season 2</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/marvel-keyart.png');">
+        <div class="credit-card-tag">Sanzuru Games</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Marvel Powers<br>United VR</div>
+          <div class="credit-studio">Technical Sound Designer</div>
+          <div class="credit-role">VR audio implementation</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Technical Sound Designer<br>Sanzuru Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/apes-keyart.png');">
+        <div class="credit-card-tag">Imaginati Studios</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Crisis on the Planet<br>of the Apes VR</div>
+          <div class="credit-studio">Technical Sound Designer</div>
+          <div class="credit-role">VR audio implementation</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Technical Sound Designer<br>Imaginati Studios.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c6s1-oni-hunters-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 6<br>Season 1</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c5s4-Wrecked-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 5<br>Season 3</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c4s3-Wilds-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 4<br>Season 3</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/paragon-keyart.png');">
+        <div class="credit-card-tag">Epic Games</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Paragon</div>
+          <div class="credit-studio">UI Sound Designer</div>
+          <div class="credit-role">UI and menu audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>UI Sound Designer<br>Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c4s1-lawless-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 4<br>Season 1</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c4s1-chapter4-launch-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite —<br>Chapter 4 Launch</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c3s4-paradise-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 3<br>Season 4</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c3s3-vibin-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 3<br>Season 3</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c3s2-resistance-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 3<br>Season 2</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
       </div>
 
       <div class="credit-card has-image" style="background-image: url('assets/images/c2s8-cubed-keyart.jpg');">
@@ -951,13 +1068,9 @@
         <div class="credit-card-text">
           <div class="credit-title">Fortnite — Chapter 2<br>Season 8</div>
           <div class="credit-studio">Audio Designer</div>
-          <div class="credit-role">Cubed map-state ambience · Operation Sky Fire event audio</div>
+          <div class="credit-role">Cubed map-state ambience · Sky Fire event</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Audio Designer<br>
-          Cubed map-state ambience &amp; Operation Sky Fire event audio.
-        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Cubed map-state ambience &amp; Operation Sky Fire event audio.</div>
       </div>
 
       <div class="credit-card has-image" style="background-image: url('assets/images/c2s7-invasion-keyart.jpg');">
@@ -967,25 +1080,67 @@
           <div class="credit-studio">Audio Designer</div>
           <div class="credit-role">Alien invasion season map audio</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Audio Designer<br>
-          Alien invasion season map audio.
-        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Alien invasion season map audio.</div>
       </div>
 
       <div class="credit-card has-image" style="background-image: url('assets/images/c2s4-fortnitemares-2020-keyart.jpg');">
         <div class="credit-card-tag">Sweet Justice / Epic</div>
         <div class="credit-card-text">
-          <div class="credit-title">Fortnitemares<br>2020</div>
+          <div class="credit-title">Fortnitemares 2020</div>
           <div class="credit-studio">Audio Designer</div>
           <div class="credit-role">Halloween seasonal event audio</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Audio Designer<br>
-          Halloween seasonal event audio.
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Halloween seasonal event audio.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/c2s2-keyart.jpg');">
+        <div class="credit-card-tag">Sweet Justice / Epic</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite — Chapter 2<br>Season 2</div>
+          <div class="credit-studio">Audio Designer</div>
+          <div class="credit-role">Map audio design</div>
         </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer<br>Sweet Justice Sound Group for Epic Games.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/mortal-kombat-11-keyart.jpg');">
+        <div class="credit-card-tag">NetherRealm Studios</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Mortal Kombat 11</div>
+          <div class="credit-studio">Dialogue Supervisor</div>
+          <div class="credit-role">Full dialogue pipeline oversight</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Dialogue Supervisor<br>Full dialogue pipeline oversight.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/injustice2-keyart.jpg');">
+        <div class="credit-card-tag">NetherRealm Studios</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Injustice 2</div>
+          <div class="credit-studio">Supervising Foley Editor</div>
+          <div class="credit-role">Cinematic Foley supervision</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Supervising Foley Editor<br>Cinematic Foley supervision.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/fnbr-keyart.jpg');">
+        <div class="credit-card-tag">Epic Games</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite<br>Battle Royale</div>
+          <div class="credit-studio">Audio Designer — Map Audio</div>
+          <div class="credit-role">2019–2026 · Large-scale world audio</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Audio Designer — Map Audio<br>2019–2026 · Unreal Engine 5.</div>
+      </div>
+
+      <div class="credit-card has-image" style="background-image: url('assets/images/fnstw-keyart.jpg'); background-position: top;">
+        <div class="credit-card-tag">Epic Games</div>
+        <div class="credit-card-text">
+          <div class="credit-title">Fortnite<br>Save the World</div>
+          <div class="credit-studio">Technical Sound Designer</div>
+          <div class="credit-role">Wwise integration &amp; asset pipeline</div>
+        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Technical Sound Designer<br>Wwise integration &amp; asset pipeline.</div>
       </div>
 
       <div class="credit-card has-image" style="background-image: url('assets/images/smoke-keyart.png');">
@@ -995,11 +1150,7 @@
           <div class="credit-studio">Technical Sound Designer</div>
           <div class="credit-role">Indie RPG full audio implementation</div>
         </div>
-        <div class="credit-tooltip">
-          <strong>Role</strong>
-          Technical Sound Designer<br>
-          Indie RPG full audio implementation.
-        </div>
+        <div class="credit-tooltip"><strong>Role</strong>Technical Sound Designer<br>Indie RPG full audio implementation.</div>
       </div>
 
     </div><!-- /credits-grid -->
