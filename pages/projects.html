@@ -178,12 +178,12 @@
     .page-wrap {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 90px 48px 96px;
+      padding: 90px 48px 12px;
     }
 
     /* ── PAGE HEADER ─────────────────────────────────────────── */
     .page-header {
-      margin-bottom: 56px;
+      margin-bottom: 12px;
     }
 
     .page-label {
@@ -228,7 +228,7 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 40px;
+      margin-bottom: 12px;
     }
 
     .filter-btn {
@@ -366,16 +366,30 @@
       opacity: 0.85;
     }
 
+    /* ── PAGE HEADER TWO-COLUMN ──────────────────────────────── */
+    .page-header-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .page-header-left { flex: 1; }
+    .page-header-right {
+      flex-shrink: 0;
+      padding-bottom: 4px;
+    }
+
     /* ── CTA BAND ────────────────────────────────────────────── */
     .cta-band {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 56px 48px;
+      background: transparent;
+      border: none;
+      padding: 56px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 40px;
       margin-top: 80px;
+      border-top: 1px solid var(--border);
     }
 
     .cta-label {
@@ -388,10 +402,21 @@
     }
 
     .cta-title {
-      font-size: clamp(14px, 2vw, 20px);
+      font-size: clamp(28px, 3.5vw, 42px);
       font-weight: 700;
       letter-spacing: 2px;
+      background: linear-gradient(180deg, #00d4ff 0%, #0090b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-subtitle {
+      font-size: clamp(12px, 1.5vw, 16px);
+      font-weight: 400;
+      letter-spacing: 2px;
       color: var(--text);
+      margin-top: 8px;
     }
 
     .btn-cta {
@@ -446,6 +471,7 @@
       /* Keep 2 columns — switch min size so cards fit without overflow */
       .projects-grid { grid-template-columns: repeat(2, 1fr); }
       .cta-band { flex-direction: column; align-items: flex-start; }
+      .page-header-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
 
       /* Show full key art — contain instead of cover so nothing is cut off */
       .project-img {
@@ -505,15 +531,28 @@
     <div class="page-header">
       <div class="page-label">Published Credits</div>
       <div class="page-divider"></div>
-      <h1 class="page-title">
-        A track record built across<br>
-        <span>some of the world's biggest titles.</span>
-      </h1>
-      <p class="page-intro">
-        Over a decade of published credits spanning AAA shooters, fighting games,
-        VR experiences, and indie titles — delivered for studios including Epic Games,
-        DICE, Valve, and NetherRealm Studios.
-      </p>
+      <div class="page-header-inner">
+        <div class="page-header-left">
+          <h1 class="page-title">
+            A track record built across<br>
+            <span>some of the world's biggest titles.</span>
+          </h1>
+          <p class="page-intro">
+            Over a decade of published credits spanning AAA shooters, fighting games,
+            VR experiences, and indie titles — delivered for studios including Epic Games,
+            DICE, Valve, and NetherRealm Studios.
+          </p>
+        </div>
+        <div class="page-header-right">
+          <a href="contact.html" class="btn-cta">
+            Send an Enquiry
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- Filter -->
@@ -680,9 +719,6 @@
         </div>
       </div>
 
-    </div>
-
-    
       <div class="project-card" data-tags="aaa">
         <div class="project-img" style="background-image:url('../assets/images/mirrorsedge-keyart.png')">
           <div class="project-type">Dialogue · Localisation</div>
@@ -1096,11 +1132,14 @@
           </p>
         </div>
       </div>
-<!-- CTA -->
+    </div>
+
+    <!-- CTA -->
     <div class="cta-band">
       <div>
         <div class="cta-label">Work With Us</div>
-        <div class="cta-title">Add your title to this list.</div>
+        <div class="cta-title">Want to work with us?</div>
+        <div class="cta-subtitle">Get in touch and let's talk about your project.</div>
       </div>
       <a href="contact.html" class="btn-cta">
         Send an Enquiry
