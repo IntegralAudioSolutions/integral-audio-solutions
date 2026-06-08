@@ -453,13 +453,15 @@
 
     /* ── CTA BAND ────────────────────────────────────────────── */
     .cta-band {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 56px 48px;
+      background: transparent;
+      border: none;
+      padding: 56px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 40px;
+      margin-top: 80px;
+      border-top: 1px solid var(--border);
     }
 
     .cta-label {
@@ -472,10 +474,21 @@
     }
 
     .cta-title {
-      font-size: clamp(14px, 2vw, 20px);
+      font-size: clamp(28px, 3.5vw, 42px);
       font-weight: 700;
       letter-spacing: 2px;
+      background: linear-gradient(180deg, #00d4ff 0%, #0090b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-subtitle {
+      font-size: clamp(12px, 1.5vw, 16px);
+      font-weight: 400;
+      letter-spacing: 2px;
       color: var(--text);
+      margin-top: 8px;
     }
 
     .btn-cta {
@@ -529,7 +542,7 @@
     @media (max-width: 900px) {
       .feature-block { grid-template-columns: 1fr; }
       .ethos-section { grid-template-columns: 1fr; gap: 40px; }
-      .cta-band { flex-direction: column; align-items: flex-start; }
+      .cta-band { flex-direction: column; align-items: flex-start; gap: 24px; }
     }
 
     @media (max-width: 600px) {
@@ -692,7 +705,8 @@
     <div class="cta-band">
       <div>
         <div class="cta-label">Work With Us</div>
-        <div class="cta-title">Ready to discuss your project?</div>
+        <div class="cta-title">Want to work with us?</div>
+        <div class="cta-subtitle">Get in touch and let's talk about your project.</div>
       </div>
       <a href="contact.html" class="btn-cta">
         Send an Enquiry
