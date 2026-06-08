@@ -554,7 +554,7 @@
       );
     }
 
-    /* ---- Top tag — studio name always visible ---- */
+    /* ---- Top tag — slides down from top on hover ---- */
     .credit-card-tag {
       position: absolute;
       top: 14px;
@@ -570,6 +570,15 @@
       color: rgba(0, 212, 255, 0.85);
       text-transform: uppercase;
       backdrop-filter: blur(4px);
+      transform: translateY(-120%);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  opacity 0.35s ease;
+    }
+
+    .credit-card:hover .credit-card-tag {
+      transform: translateY(0);
+      opacity: 1;
     }
 
     /* ---- Text panel — always visible, more detail on hover ---- */
