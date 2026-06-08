@@ -76,6 +76,99 @@
       background-clip: text;
     }
 
+    /* ── HAMBURGER BUTTON ────────────────────────────────── */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      padding: 8px;
+      flex-shrink: 0;
+    }
+    .nav-burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--cyan);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── MOBILE NAV OVERLAY ──────────────────────────────── */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(10,14,20,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-overlay.open { display: flex; }
+    .nav-overlay ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .nav-overlay ul li {
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-overlay ul li:first-child { border-top: 1px solid var(--border); }
+    .nav-overlay ul a {
+      display: block;
+      padding: 22px 24px;
+      font-family: var(--font);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: linear-gradient(180deg, #e2e8f0 0%, #7a9ab5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-overlay ul a:hover,
+    .nav-overlay ul a.active {
+      background: linear-gradient(180deg, #00d4ff 0%, #0090b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-overlay-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 18px;
+      color: var(--cyan);
+      padding: 8px;
+    }
+
+    @media (max-width: 700px) {
+      nav { justify-content: flex-end; padding: 14px 20px; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+    }
+
+
     /* ── PAGE LAYOUT ─────────────────────────────────────────── */
     .page-wrap {
       max-width: 1200px;
@@ -459,8 +552,6 @@
     }
 
     @media (max-width: 600px) {
-      nav { padding: 16px 20px; }
-      .nav-links { gap: 20px; }
       .page-wrap { padding: 120px 20px 64px; }
       .submit-wrap { flex-direction: column; align-items: flex-start; }
       footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
@@ -479,7 +570,19 @@
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Open navigation"><span></span><span></span><span></span></button>
   </nav>
+
+  <div class="nav-overlay" id="nav-overlay">
+    <button class="nav-overlay-close" id="nav-overlay-close" aria-label="Close">&#10005;</button>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </div>
 
   <!-- PAGE CONTENT -->
   <div class="page-wrap">
@@ -619,5 +722,17 @@
     });
   </script>
 
+
+  <script>
+    /* ── Hamburger menu ──────────────────────────────────── */
+    const burger   = document.getElementById('nav-burger');
+    const overlay  = document.getElementById('nav-overlay');
+    const closeBtn = document.getElementById('nav-overlay-close');
+    function openMenu()  { overlay.classList.add('open'); burger.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { overlay.classList.remove('open'); burger.classList.remove('open'); document.body.style.overflow = ''; }
+    burger.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  </script>
 </body>
 </html>
