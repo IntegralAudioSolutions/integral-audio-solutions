@@ -1,22 +1,10 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Primary SEO -->
-  <title>Game Audio Sound Design & UE5 Implementation | Integral Audio Solutions Ltd</title>
-  <meta name="description" content="UK-based game audio contractor specialising in world-building sound design, Unreal Engine 5 implementation, and technical audio pipeline. AAA credits include Fortnite, Sweet Justice Sound Group productions, and more.">
-  <link rel="canonical" href="https://integralaudiosolutions.co.uk/">
-  <meta name="google-site-verification" content="pahMG5SeJLkrsaYI-9f-0REaoDXOYdRQJ9vtUInxmbA">
-  <meta name="msvalidate.01" content="4F3ACA7BEB43DEC94B0BC28229F5036D">
-
-  <!-- Open Graph — controls how the site looks when shared on LinkedIn, Slack, Discord -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://integralaudiosolutions.co.uk/">
-  <meta property="og:title" content="Game Audio Sound Design & UE5 Implementation | Integral Audio Solutions Ltd">
-  <meta property="og:description" content="UK-based game audio contractor. World-building audio, UE5 implementation, SFX design. AAA credits include Fortnite and Sweet Justice Sound Group.">
-  <meta property="og:site_name" content="Integral Audio Solutions Ltd">
+  <title>Integral Audio Solutions Ltd — Game Audio Specialists</title>
+  <meta name="description" content="Integral Audio Solutions Ltd is a UK-based sound design studio delivering world-building audio, UE5 implementation, and technical sound design for AAA and indie games.">
 
   <!-- Orbitron font — required for logo and headings -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
@@ -243,7 +231,13 @@
       position: relative;
     }
 
-    #ias-canvas { display: block; }
+    #ias-canvas        { display: block; }
+    #ias-canvas-mobile { display: none;  }
+
+    @media (max-width: 700px) {
+      #ias-canvas        { display: none;  }
+      #ias-canvas-mobile { display: block; }
+    }
 
     .ias-wordmark {
       margin-top: 18px;
@@ -826,7 +820,8 @@
 
   <header class="hero">
     <div id="ias-logo">
-      <canvas id="ias-canvas" width="480" height="150"></canvas>
+      <canvas id="ias-canvas"        width="480" height="150"></canvas>
+      <canvas id="ias-canvas-mobile" width="320" height="100"></canvas>
       <div class="ias-rule"></div>
       <div class="ias-wordmark">
         <div class="ias-name">INTEGRAL AUDIO SOLUTIONS</div>
@@ -1356,11 +1351,12 @@
       }
     }
 
-    function makeLogoLoop(canvasId, amp, leftFrac, rightFrac) {
+    function makeLogoLoop(canvasId, amp, leftFrac, rightFrac, freezeAfter) {
       const cvs = document.getElementById(canvasId);
       if (!cvs) return;
       const ctx = cvs.getContext('2d');
       const cW = cvs.width, cH = cvs.height;
+      const FREEZE_MS = (freezeAfter !== undefined) ? freezeAfter : FREEZE_AFTER;
       let t = 0;
       let frozenT    = null;
       let phase      = 'animating';
@@ -1370,7 +1366,7 @@
       let fadeStart  = null;
       const TRACE_DURATION = 1000;
       const FADE_DURATION  = 700;
-      const TRACE_START_AT = FREEZE_AFTER - TRACE_DURATION;
+      const TRACE_START_AT = FREEZE_MS - TRACE_DURATION;
 
       function loop(now) {
         const elapsed = now - sharedStart;
@@ -1426,6 +1422,9 @@
     }
 
     makeLogoLoop('ias-canvas', 48, 0.24, 0.73);
+
+    /* Mobile canvas — smaller amp, same wave shape, snappier freeze */
+    makeLogoLoop('ias-canvas-mobile', 32, 0.24, 0.73, 2500);
   </script>
 
   <script>
