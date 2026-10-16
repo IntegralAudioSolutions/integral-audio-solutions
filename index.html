@@ -484,14 +484,20 @@
       background: var(--surface-2);
     }
 
+
+    /* Service icons — simple line drawings (inline SVG) that replace the
+       old bracketed text tags such as SFX and ENV. They use
+       stroke="currentColor", so they take the cyan from the color
+       property below. To swap an icon, replace the <svg> inside the
+       matching .service-icon in the HTML. */
     .service-icon {
-      font-size: 20px;
-      margin-bottom: 16px;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 20px;
       color: var(--cyan);
-      font-family: var(--font-display);
-      font-weight: 700;
-      letter-spacing: 2px;
+      filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.35)); /* soft glow to match the logo */
     }
+    .service-icon svg { width: 100%; height: 100%; display: block; }
 
     .service-title {
       font-family: var(--font-display);
@@ -1180,7 +1186,7 @@
       <div class="services-grid">
 
         <div class="service-card">
-          <div class="service-icon">[ SFX ]</div>
+          <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16v0M7 13v6M10 9v14M13 12v8M16 5v22M19 10v12M22 13v6M25 8v16M28 15v2"/></svg></div>
           <div class="service-title">Sound Effects Design</div>
           <p class="service-desc">
             Original sound effects from field recording and synthesis through to final delivery — built for your
@@ -1189,7 +1195,7 @@
         </div>
 
         <div class="service-card">
-          <div class="service-icon">[ ENV ]</div>
+          <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 26h26M3 26l8-11 6 7 4-4 8 8"/><path d="M8 9.5a4.5 4.5 0 0 1 6 0M5 6.5a8.5 8.5 0 0 1 12 0"/></svg></div>
           <div class="service-title">World-Building Audio</div>
           <p class="service-desc">
             Environmental and spatial audio design for large-scale open worlds and immersive game environments —
@@ -1198,7 +1204,7 @@
         </div>
 
         <div class="service-card">
-          <div class="service-icon">[ UE5 ]</div>
+          <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="11" height="8" rx="1.5"/><rect x="18" y="19" width="11" height="8" rx="1.5"/><path d="M14 9h2c3 0 2 14 5 14h-3"/><circle cx="14" cy="9" r="1.2" fill="currentColor"/><circle cx="18" cy="23" r="1.2" fill="currentColor"/></svg></div>
           <div class="service-title">UE5 Implementation</div>
           <p class="service-desc">
             Full Wwise / UE5 pipeline implementation: SoundBank generation, Blueprint AK node setup, profiling,
@@ -1207,7 +1213,7 @@
         </div>
 
         <div class="service-card">
-          <div class="service-icon">[ SYS ]</div>
+          <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4l12 6-12 6-12-6z"/><path d="M4 16l12 6 12-6M4 22l12 6 12-6"/></svg></div>
           <div class="service-title">Technical Audio Pipeline</div>
           <p class="service-desc">
             Middleware architecture, asset workflow design, and pipeline consultation — for studios building or

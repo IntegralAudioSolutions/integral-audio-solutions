@@ -528,6 +528,19 @@
       .page-intro { font-size: 16px; }
       .service-body, .step-body { font-size: 14.5px; }
     }
+    /* Service icons — simple line drawings (inline SVG) that replace the
+       old bracketed text tags such as SFX and ENV. They use
+       stroke="currentColor", so they take the cyan from the color
+       property below. To swap an icon, replace the <svg> inside the
+       matching .service-icon in the HTML. */
+    .service-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 22px;
+      color: var(--cyan);
+      filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.35));
+    }
+    .service-icon svg { width: 100%; height: 100%; display: block; }
   </style>
 </head>
 
@@ -577,7 +590,7 @@
     <div class="services-grid">
 
       <div class="service-card">
-        <div class="service-tag">SFX</div>
+        <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16v0M7 13v6M10 9v14M13 12v8M16 5v22M19 10v12M22 13v6M25 8v16M28 15v2"/></svg></div>
         <div class="service-title">Sound Effects Design</div>
         <p class="service-body">
           Original sound effects created from field recording, synthesis, and processing —
@@ -588,18 +601,18 @@
       </div>
 
       <div class="service-card">
-        <div class="service-tag">ENV</div>
+        <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 26h26M3 26l8-11 6 7 4-4 8 8"/><path d="M8 9.5a4.5 4.5 0 0 1 6 0M5 6.5a8.5 8.5 0 0 1 12 0"/></svg></div>
         <div class="service-title">World-Building Audio</div>
         <p class="service-body">
           Environmental and spatial audio design for large-scale open worlds, levels, and
           immersive game environments. Our core speciality — honed across six years of
-          Fortnite map audio at Epic Games. We build the sonic architecture that makes
+          Fortnite map audio with Epic Games. We build the sonic architecture that makes
           a space feel alive without the player ever noticing why.
         </p>
       </div>
 
       <div class="service-card">
-        <div class="service-tag">UE5</div>
+        <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="11" height="8" rx="1.5"/><rect x="18" y="19" width="11" height="8" rx="1.5"/><path d="M14 9h2c3 0 2 14 5 14h-3"/><circle cx="14" cy="9" r="1.2" fill="currentColor"/><circle cx="18" cy="23" r="1.2" fill="currentColor"/></svg></div>
         <div class="service-title">UE5 Implementation</div>
         <p class="service-body">
           Full Wwise and Unreal Engine 5 pipeline implementation: SoundBank generation,
@@ -610,7 +623,7 @@
       </div>
 
       <div class="service-card">
-        <div class="service-tag">UEFN</div>
+        <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 28s-8-7.5-8-14a8 8 0 0 1 16 0c0 6.5-8 14-8 14z"/><circle cx="16" cy="14" r="3"/></svg></div>
         <div class="service-title">UEFN / Fortnite Creative</div>
         <p class="service-body">
           Audio implementation and world-building within Unreal Editor for Fortnite —
@@ -622,7 +635,7 @@
       </div>
 
       <div class="service-card">
-        <div class="service-tag">SYS</div>
+        <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4l12 6-12 6-12-6z"/><path d="M4 16l12 6 12-6M4 22l12 6 12-6"/></svg></div>
         <div class="service-title">Technical Audio Pipeline</div>
         <p class="service-body">
           Middleware architecture, asset workflow design, naming conventions, and pipeline
@@ -634,7 +647,7 @@
       </div>
 
       <div class="service-card">
-        <div class="service-tag">FILM</div>
+        <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="24" height="16" rx="1.5"/><path d="M4 11V6h24v5M9 6l3 5M16 6l3 5M23 6l3 5"/></svg></div>
         <div class="service-title">Film Audio</div>
         <p class="service-body">
           Sound design support for UK film productions. Bringing the same
@@ -645,7 +658,7 @@
       </div>
 
       <div class="service-card">
-        <div class="service-tag">DLG</div>
+        <div class="service-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h22a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H13l-6 5v-5H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/><path d="M10 14v0M13 12v4M16 10v8M19 12v4M22 14v0"/></svg></div>
         <div class="service-title">Dialogue Editorial</div>
         <p class="service-body">
           Dialogue editing, processing, and pipeline supervision for games with significant
