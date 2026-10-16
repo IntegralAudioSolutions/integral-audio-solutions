@@ -560,7 +560,8 @@
     /*
       <picture> just chooses which file to load: on screens up to 900px wide
       the browser fetches the small 480x270 WebP from assets/images/thumbs/;
-      wider screens load the full-size key art. display: contents removes the
+      wider screens load the 800px WebP from assets/images/tiles/ (about
+      50 KB each instead of 200 KB–1 MB for the original files). display: contents removes the
       wrapper's own box so the <img> sizes itself against the card.
     */
     .credit-card picture { display: contents; }
@@ -964,8 +965,7 @@
     /* =====================================================
        SCROLL FADE-INS
        Content slides up 14px and fades in as it enters the
-       screen. Kept deliberately quick (0.38s) so the site
-       feels responsive rather than theatrical. Items that
+       screen over 0.68s — smooth but never sluggish. Items that
        arrive together (e.g. a row of cards) ripple in
        45ms apart, capped so nothing waits long.
 
@@ -1014,8 +1014,8 @@
     html.rv-on .rv-anim {
       opacity: 1;
       translate: 0 0;
-      transition: opacity 0.38s cubic-bezier(0.2, 0.7, 0.2, 1),
-                  translate 0.38s cubic-bezier(0.2, 0.7, 0.2, 1);
+      transition: opacity 0.68s cubic-bezier(0.2, 0.7, 0.2, 1),
+                  translate 0.68s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
   </style>
 </head>
@@ -1078,7 +1078,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/fnbr-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/fnbr-keyart.jpg" alt="Fortnite Battle Royale" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/fnbr-keyart.webp" alt="Fortnite Battle Royale" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Fortnite<br>Battle Royale</div>
@@ -1095,7 +1095,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/fnstw-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/fnstw-keyart.jpg" alt="Fortnite Save the World" width="480" height="270" loading="lazy" decoding="async" style="object-position: center top;">
+            <img class="credit-art" src="assets/images/tiles/fnstw-keyart.webp" alt="Fortnite Save the World" width="480" height="270" loading="lazy" decoding="async" style="object-position: center top;">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Fortnite<br>Save the World</div>
@@ -1111,7 +1111,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/ascent-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/ascent-keyart.jpg" alt="The Ascent" width="480" height="270" loading="lazy" decoding="async" style="object-position: center top;">
+            <img class="credit-art" src="assets/images/tiles/ascent-keyart.webp" alt="The Ascent" width="480" height="270" loading="lazy" decoding="async" style="object-position: center top;">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">The Ascent</div>
@@ -1127,7 +1127,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/half_life_alyx-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/half_life_alyx-keyart.jpg" alt="Half-Life: Alyx" width="480" height="270" loading="lazy" decoding="async" style="object-position: center top;">
+            <img class="credit-art" src="assets/images/tiles/half_life_alyx-keyart.webp" alt="Half-Life: Alyx" width="480" height="270" loading="lazy" decoding="async" style="object-position: center top;">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Half-Life: Alyx</div>
@@ -1143,7 +1143,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/mortal-kombat-11-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/mortal-kombat-11-keyart.jpg" alt="Mortal Kombat 11" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/mortal-kombat-11-keyart.webp" alt="Mortal Kombat 11" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Mortal Kombat 11</div>
@@ -1159,7 +1159,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/apes-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/apes-keyart.png" alt="Crisis on the Planet of the Apes VR" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/apes-keyart.webp" alt="Crisis on the Planet of the Apes VR" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Planet of the<br>Apes VR</div>
@@ -1175,7 +1175,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/marvel-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/marvel-keyart.png" alt="Marvel Powers United VR" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/marvel-keyart.webp" alt="Marvel Powers United VR" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Marvel Powers<br>United VR</div>
@@ -1191,7 +1191,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/cuphead-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/cuphead-keyart.png" alt="Cuphead" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/cuphead-keyart.webp" alt="Cuphead" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Cuphead</div>
@@ -1207,7 +1207,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/injustice2-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/injustice2-keyart.jpg" alt="Injustice 2" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/injustice2-keyart.webp" alt="Injustice 2" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Injustice 2</div>
@@ -1223,7 +1223,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/bf1-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/bf1-keyart.png" alt="Battlefield 1" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/bf1-keyart.webp" alt="Battlefield 1" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Battlefield 1</div>
@@ -1240,7 +1240,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/mirrorsedge-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/mirrorsedge-keyart.png" alt="Mirror&#39;s Edge Catalyst" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/mirrorsedge-keyart.webp" alt="Mirror&#39;s Edge Catalyst" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Mirror's Edge<br>Catalyst</div>
@@ -1256,7 +1256,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/paragon-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/paragon-keyart.png" alt="Paragon" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/paragon-keyart.webp" alt="Paragon" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Paragon</div>
@@ -1272,7 +1272,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/ballistic-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/ballistic-keyart.jpg" alt="Fortnite Ballistic" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/ballistic-keyart.webp" alt="Fortnite Ballistic" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Ballistic<br>(UEFN)</div>
@@ -1289,7 +1289,7 @@
         <div class="credit-card has-image" tabindex="0">
           <picture>
             <source media="(max-width: 900px)" srcset="assets/images/thumbs/smoke-keyart.webp" type="image/webp">
-            <img class="credit-art" src="assets/images/smoke-keyart.png" alt="Smoke and Sacrifice" width="480" height="270" loading="lazy" decoding="async">
+            <img class="credit-art" src="assets/images/tiles/smoke-keyart.webp" alt="Smoke and Sacrifice" width="480" height="270" loading="lazy" decoding="async">
           </picture>
           <div class="credit-card-text">
           <div class="credit-title">Smoke and<br>Sacrifice</div>

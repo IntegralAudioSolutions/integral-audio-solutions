@@ -661,8 +661,7 @@
     /* =====================================================
        SCROLL FADE-INS
        Content slides up 14px and fades in as it enters the
-       screen. Kept deliberately quick (0.38s) so the site
-       feels responsive rather than theatrical. Items that
+       screen over 0.68s — smooth but never sluggish. Items that
        arrive together (e.g. a row of cards) ripple in
        45ms apart, capped so nothing waits long.
 
@@ -711,8 +710,8 @@
     html.rv-on .rv-anim {
       opacity: 1;
       translate: 0 0;
-      transition: opacity 0.38s cubic-bezier(0.2, 0.7, 0.2, 1),
-                  translate 0.38s cubic-bezier(0.2, 0.7, 0.2, 1);
+      transition: opacity 0.68s cubic-bezier(0.2, 0.7, 0.2, 1),
+                  translate 0.68s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
   </style>
 </head>
