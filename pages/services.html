@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Scroll fade-ins: switch on early (before the page draws) so items
+       start hidden instead of flashing visible then disappearing.
+       Skipped entirely for visitors who ask their device for reduced motion. -->
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      document.documentElement.classList.add('rv-on');
+    }
+  </script>
   <!-- ==========================================================
        FAVICON / APP ICONS
        The browser picks the best match it understands from this
@@ -649,6 +658,62 @@
       .footer-inner > div:last-child { grid-column: 1 / -1; } /* enquiries full width so the email fits on one line */
       .footer-legal { flex-direction: column; margin-top: 36px; }
     }
+    /* =====================================================
+       SCROLL FADE-INS
+       Content slides up 14px and fades in as it enters the
+       screen. Kept deliberately quick (0.38s) so the site
+       feels responsive rather than theatrical. Items that
+       arrive together (e.g. a row of cards) ripple in
+       45ms apart, capped so nothing waits long.
+
+       How it works:
+       1. A tiny script in <head> adds .rv-on to <html>.
+       2. While .rv-on is set, everything in the list below
+          starts hidden.
+       3. The script at the bottom of the page watches for
+          each item entering the screen, adds .rv-anim to
+          play the fade, then .rv-done when it finishes.
+       If you add a new section, add its class to this list
+       AND to REVEAL_TARGETS in the script at the bottom.
+       ===================================================== */
+    html.rv-on :is(
+      .hero-tagline,
+      .hero-headline,
+      .hero-body,
+      .credit-card,
+      .section-label,
+      .about-copy p,
+      .stat,
+      .service-card,
+      .cta-band > *,
+      .page-label,
+      .page-title,
+      .page-intro,
+      .page-header-right,
+      .filter-row,
+      .stat-item,
+      .feature-block,
+      .ethos-left,
+      .ethos-point,
+      .clients-label,
+      .client-tag,
+      .section-title,
+      .process-step,
+      .project-card,
+      .contact-grid > *,
+      .footer-inner > *,
+      .footer-legal
+    ):not(.rv-anim):not(.rv-done) {
+      opacity: 0;
+      translate: 0 14px;
+    }
+
+    html.rv-on .rv-anim {
+      opacity: 1;
+      translate: 0 0;
+      transition: opacity 0.38s cubic-bezier(0.2, 0.7, 0.2, 1),
+                  translate 0.38s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
   </style>
 </head>
 
@@ -894,5 +959,53 @@
     overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   </script>
   <script data-goatcounter="https://integralaudio.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <script>
+    /* ── Scroll fade-ins (see SCROLL FADE-INS in the stylesheet) ── */
+    (function () {
+      if (!document.documentElement.classList.contains('rv-on')) return;
+
+      const REVEAL_TARGETS = '.hero-tagline, .hero-headline, .hero-body, .credit-card, .section-label, .about-copy p, .stat, .service-card, .cta-band > *, .page-label, .page-title, .page-intro, .page-header-right, .filter-row, .stat-item, .feature-block, .ethos-left, .ethos-point, .clients-label, .client-tag, .section-title, .process-step, .project-card, .contact-grid > *, .footer-inner > *, .footer-legal';
+      const STAGGER = 45;   /* ms between items arriving together */
+      const MAX_STEPS = 6;  /* cap: the 7th item onwards waits no longer than the 6th */
+
+      const items = document.querySelectorAll(REVEAL_TARGETS);
+
+      const observer = new IntersectionObserver(entries => {
+        /* Items entering in the same moment ripple in top-to-bottom, left-to-right */
+        const arriving = entries
+          .filter(e => e.isIntersecting)
+          .map(e => e.target)
+          .sort((a, b) => {
+            const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+            return (ra.top - rb.top) || (ra.left - rb.left);
+          });
+
+        arriving.forEach((el, i) => {
+          observer.unobserve(el);
+          el.style.transitionDelay = Math.min(i, MAX_STEPS) * STAGGER + 'ms';
+          el.classList.add('rv-anim');
+          /* Once finished, hand the element back to its normal styles
+             so its own hover transitions work exactly as before */
+          el.addEventListener('transitionend', function done(ev) {
+            if (ev.target !== el || ev.propertyName !== 'opacity') return;
+            el.removeEventListener('transitionend', done);
+            el.style.transitionDelay = '';
+            el.classList.replace('rv-anim', 'rv-done');
+          });
+        });
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.01 });
+
+      items.forEach(el => observer.observe(el));
+
+      /* Safety net: if anything is still hidden after 4 seconds
+         (e.g. an odd browser), just show it */
+      setTimeout(() => items.forEach(el => {
+        if (!el.classList.contains('rv-anim') && !el.classList.contains('rv-done')) {
+          const r = el.getBoundingClientRect();
+          if (r.top < innerHeight && r.bottom > 0) el.classList.add('rv-done');
+        }
+      }), 4000);
+    })();
+  </script>
 </body>
 </html>
