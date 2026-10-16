@@ -586,6 +586,114 @@
       .project-studio { font-size: 9px; }
       .project-type  { font-size: 7px; padding: 4px 9px; bottom: 10px; left: 14px; }
     }
+    /* =====================================================
+       FOOTER — company details, page links and enquiries
+       Three columns on desktop, stacked on phones.
+       The bottom strip carries the legal details a UK
+       limited company should show on its website.
+       ===================================================== */
+    footer.site-footer {
+      display: block;
+      padding: 64px 48px 28px;
+      border-top: 1px solid var(--border);
+      background: #080b10;           /* a touch darker than the page */
+      text-align: left;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 48px;
+    }
+
+    /* Brand column */
+    .footer-brand-name {
+      font-family: 'Orbitron', 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      color: #e2e8f0;
+      text-decoration: none;
+    }
+    .footer-brand-sub {
+      font-family: 'Orbitron', 'Courier New', monospace;
+      font-size: 8px;
+      letter-spacing: 6px;
+      color: #64748b;
+      margin-top: 8px;
+    }
+    .footer-blurb {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #94a3b8;
+      margin-top: 20px;
+      max-width: 340px;
+    }
+
+    /* Column headings — same style as the section labels */
+    .footer-heading {
+      font-family: 'Orbitron', 'Courier New', monospace;
+      font-size: 9px;
+      letter-spacing: 5px;
+      color: #00d4ff;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 18px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a,
+    .footer-email {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 14px;
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover,
+    .footer-email:hover { color: #00d4ff; }
+
+    .footer-email { overflow-wrap: anywhere; }  /* only wraps on very narrow screens */
+
+    .footer-note {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    /* Legal strip along the bottom */
+    .footer-legal {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 12px;
+      color: #64748b;
+      letter-spacing: 0.2px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+    }
+
+    @media (max-width: 768px) {
+      footer.site-footer { padding: 48px 20px 24px; text-align: left; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+      .footer-brand { grid-column: 1 / -1; }   /* brand spans the full width */
+      .footer-inner > div:last-child { grid-column: 1 / -1; } /* enquiries full width so the email fits on one line */
+      .footer-legal { flex-direction: column; margin-top: 36px; }
+    }
   </style>
 </head>
 
@@ -1257,9 +1365,49 @@
   </div>
 
   <!-- FOOTER -->
-  <footer>
-    <div class="footer-name">Integral Audio Solutions Ltd</div>
-    <div class="footer-copy">Registered in England &amp; Wales · Est. 2023</div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a class="footer-brand-name" href="../index.html">INTEGRAL AUDIO SOLUTIONS</a>
+        <div class="footer-brand-sub">GAME AUDIO SPECIALISTS</div>
+        <p class="footer-blurb">
+          UK-based sound design studio delivering world-building audio, UE5 implementation
+          and technical sound design for AAA and indie games.
+        </p>
+      </div>
+
+      <!-- Page links -->
+      <div>
+        <div class="footer-heading">Pages</div>
+        <ul class="footer-links">
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Enquiries -->
+      <div>
+        <div class="footer-heading">Enquiries</div>
+        <a class="footer-email" href="mailto:IntegralAudioSolutions@outlook.com">IntegralAudioSolutions@outlook.com</a>
+        <p class="footer-note">UK-based, working globally.</p>
+      </div>
+
+    </div>
+
+    <!-- Legal details: company name, number and where registered -->
+    <div class="footer-legal">
+      <span>&copy; <span class="footer-year">2026</span> Integral Audio Solutions Ltd</span>
+      <span>Registered in England &amp; Wales · Company No. 15362786</span>
+    </div>
+
+    <script>
+      /* Keeps the copyright year current without editing the HTML each January */
+      document.querySelectorAll('.footer-year').forEach(el => el.textContent = new Date().getFullYear());
+    </script>
   </footer>
 
   <script>
