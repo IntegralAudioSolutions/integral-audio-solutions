@@ -7,7 +7,7 @@
   <meta name="description" content="Integral Audio Solutions Ltd is a UK-based sound design studio delivering world-building audio, UE5 implementation, and technical sound design for AAA and indie games.">
 
   <!-- Orbitron font — required for logo and headings -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* =====================================================
@@ -672,6 +672,7 @@
     }
 
     .credit-tooltip strong {
+      font-family: var(--font-display); /* keep the "Role" label in Orbitron */
       display: block;
       color: var(--cyan);
       font-size: 8px;
@@ -781,6 +782,61 @@
         text-align: center;
         padding: 32px 20px;
       }
+    }
+
+    /* =====================================================
+       READABLE BODY TEXT — IBM Plex Sans
+       Orbitron stays for the logo, headings, labels, buttons
+       and navigation. Anything you read as a sentence uses
+       IBM Plex Sans instead: no wide letter-spacing, larger
+       size, and a lighter grey (#94a3b8) for better contrast
+       on the dark background. This block sits at the end of
+       the stylesheet so it overrides the older Orbitron rules.
+       ===================================================== */
+    :root {
+      --font-text: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --text-body: #94a3b8;  /* body copy grey — brighter than --muted */
+    }
+
+    /* Lead paragraphs — intros at the top of a page */
+    .hero-body,
+    .about-copy p {
+      font-family: var(--font-text);
+      font-size: 17px;
+      letter-spacing: 0;
+      line-height: 1.75;
+      color: var(--text-body);
+    }
+
+    /* Card and section descriptions */
+    .service-desc,
+    .cta-band p {
+      font-family: var(--font-text);
+      font-size: 15px;
+      letter-spacing: 0;
+      line-height: 1.7;
+      color: var(--text-body);
+    }
+
+    /* Small supporting text */
+    .credit-tooltip {
+      font-family: var(--font-text);
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: 1.6;
+    }
+
+    /* Bold words inside body text keep the same font, just heavier */
+    .hero-body strong, .about-copy p strong, .service-desc strong, .cta-band p strong {
+      font-family: var(--font-text);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Phones — slightly smaller so lines are not too short */
+    @media (max-width: 768px) {
+      .hero-body, .about-copy p { font-size: 16px; }
+      .service-desc, .cta-band p { font-size: 14.5px; }
     }
   </style>
 </head>

@@ -33,7 +33,7 @@
   <meta property="og:description" content="AAA and indie sound design credits — Fortnite, Battlefield 1, Mortal Kombat 11, Cuphead, and Sweet Justice Sound Group collaborations.">
   <meta property="og:site_name" content="Integral Audio Solutions Ltd">
 
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -521,6 +521,70 @@
     @media (max-width: 600px) {
       .page-wrap { padding: 80px 12px 64px; }
       footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
+    }
+
+    /* =====================================================
+       READABLE BODY TEXT — IBM Plex Sans
+       Orbitron stays for the logo, headings, labels, buttons
+       and navigation. Anything you read as a sentence uses
+       IBM Plex Sans instead: no wide letter-spacing, larger
+       size, and a lighter grey (#94a3b8) for better contrast
+       on the dark background. This block sits at the end of
+       the stylesheet so it overrides the older Orbitron rules.
+       ===================================================== */
+    :root {
+      --font-text: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --text-body: #94a3b8;  /* body copy grey — brighter than --muted */
+    }
+
+    /* Lead paragraphs — intros at the top of a page */
+    .page-intro {
+      font-family: var(--font-text);
+      font-size: 17px;
+      letter-spacing: 0;
+      line-height: 1.75;
+      color: var(--text-body);
+    }
+
+    /* Card and section descriptions */
+    .project-desc {
+      font-family: var(--font-text);
+      font-size: 15px;
+      letter-spacing: 0;
+      line-height: 1.7;
+      color: var(--text-body);
+    }
+
+    /* Small supporting text */
+    .project-role {
+      font-family: var(--font-text);
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: 1.6;
+    }
+
+    /* Bold words inside body text keep the same font, just heavier */
+    .page-intro strong, .project-desc strong {
+      font-family: var(--font-text);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Phones — slightly smaller so lines are not too short */
+    @media (max-width: 768px) {
+      .page-intro { font-size: 16px; }
+      .project-desc { font-size: 14.5px; }
+    }
+    /* Phones — one card per row. With readable text, two narrow
+       columns made each description a long, thin strip. A single
+       full-width card also gives the key art room to breathe. */
+    @media (max-width: 600px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-img   { height: auto; aspect-ratio: 16 / 9; }
+      .project-body  { padding: 18px 18px 20px; gap: 8px; }
+      .project-title { font-size: 12px; }
+      .project-studio { font-size: 9px; }
+      .project-type  { font-size: 7px; padding: 4px 9px; bottom: 10px; left: 14px; }
     }
   </style>
 </head>

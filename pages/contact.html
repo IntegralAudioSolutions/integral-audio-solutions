@@ -33,7 +33,7 @@
   <meta property="og:description" content="UK game audio contractor available for project-based sound design and UE5 implementation work. Send an enquiry to start a conversation.">
   <meta property="og:site_name" content="Integral Audio Solutions Ltd">
 
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -583,6 +583,72 @@
       .page-wrap { padding: 120px 20px 64px; }
       .submit-wrap { flex-direction: column; align-items: flex-start; }
       footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
+    }
+
+    /* =====================================================
+       READABLE BODY TEXT — IBM Plex Sans
+       Orbitron stays for the logo, headings, labels, buttons
+       and navigation. Anything you read as a sentence uses
+       IBM Plex Sans instead: no wide letter-spacing, larger
+       size, and a lighter grey (#94a3b8) for better contrast
+       on the dark background. This block sits at the end of
+       the stylesheet so it overrides the older Orbitron rules.
+       ===================================================== */
+    :root {
+      --font-text: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --text-body: #94a3b8;  /* body copy grey — brighter than --muted */
+    }
+
+    /* Lead paragraphs — intros at the top of a page */
+    .page-intro {
+      font-family: var(--font-text);
+      font-size: 17px;
+      letter-spacing: 0;
+      line-height: 1.75;
+      color: var(--text-body);
+    }
+
+    /* Card and section descriptions */
+    .info-value,
+    .thankyou-body,
+    .field input,
+    .field textarea {
+      font-family: var(--font-text);
+      font-size: 15px;
+      letter-spacing: 0;
+      line-height: 1.7;
+      color: var(--text-body);
+    }
+
+    /* Small supporting text */
+    .spec-item,
+    .submit-note {
+      font-family: var(--font-text);
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: 1.6;
+    }
+
+    /* Bold words inside body text keep the same font, just heavier */
+    .page-intro strong, .info-value strong, .thankyou-body strong {
+      font-family: var(--font-text);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Phones — slightly smaller so lines are not too short */
+    @media (max-width: 768px) {
+      .page-intro { font-size: 16px; }
+      .info-value, .thankyou-body, .field input, .field textarea { font-size: 14.5px; }
+    }
+    /* Phones — two fixes found while testing:
+       1. The soft glow behind the form spilled 40px past the screen
+          edge, letting the whole page scroll sideways. Keep it inside.
+       2. iPhones zoom in when you tap a box whose text is under 16px,
+          so form fields use 16px on phones. */
+    @media (max-width: 768px) {
+      .contact-form-wrap::before { left: 0; right: 0; }
+      .field input, .field textarea { font-size: 16px; }
     }
   </style>
 </head>
