@@ -16,6 +16,9 @@
   <meta name="description" content="Integral Audio Solutions Ltd is a UK-based sound design studio delivering world-building audio, UE5 implementation, and technical sound design for AAA and indie games.">
 
   <!-- Orbitron font — required for logo and headings -->
+  <!-- Open connections to Google Fonts early so the fonts arrive sooner -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
@@ -1017,183 +1020,113 @@
       transition: opacity 0.68s cubic-bezier(0.2, 0.7, 0.2, 1),
                   translate 0.68s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
-  
+
     /* =====================================================
-       HERO PAPER-TEAR PARALLAX
-       A single large tear sits behind the hero section,
-       revealing the C4S2 MEGA key art through a torn-paper
-       cutout effect. The hero text floats above it in a
-       frosted-glass panel.
+       ABOUT SECTION — PAPER TEAR + FROSTED BAND
+       One torn-paper strip (the C4S2 MEGA key art) runs behind the
+       About section, its top edge just cutting into the second row
+       of credit tiles. The About text sits on a full-width frosted
+       band so it stays readable over the art.
+
+       Built exactly like the projects page tears:
+         .rip-hole   — the torn opening (ragged outline from tear-c4s2.css)
+         .rip-img    — the picture; the script moves it via --rip-shift
+         .rip-edges  — pale paper-fibre rims with a soft shadow
+       Settings:
+         --rip-angle  tilt (positive = higher on the left)
+         --rip-rise   tan(angle) — 5deg = 0.0875
+         --rip-h      thickness of the tear
+         top          where the tear's centre line sits within .about-stage
        ===================================================== */
+    .about-stage { position: relative; }
 
-    /* Wrapper that holds the tear and hero together */
-    .hero-rip-wrap {
-      position: relative;
-    }
+    /* Tiles and the enquiry button sit above the tear */
+    .credits-section { position: relative; z-index: 1; }
 
-    /* Positions the tear to fill the wrapper */
-    .hero-rip {
-      --rip-angle: -4deg;
-      --rip-rise:  0.0699;
+    .rip {
+      --rip-h: clamp(420px, 48vw, 820px);
       position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
+      left: 50%;
+      width: 100vw;
+      height: calc(var(--rip-rise) * 106vw + var(--rip-h) * 1.01 + 30px);
+      transform: translate(-50%, -50%);   /* "top" sets the centre line */
       overflow: hidden;
+      pointer-events: none;                /* decorative — clicks pass through */
+      z-index: 0;
     }
-
-    .hero-rip .rip-strip {
+    .rip-strip {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 106vw;
+      height: var(--rip-h);
+      transform: translate(-50%, -50%) rotate(var(--rip-angle));
+    }
+    .rip-hole {
       position: absolute;
       inset: 0;
-      transform: rotate(var(--rip-angle));
-      width: calc(100% + 200px);
-      left: -100px;
-      top: -80px;
-      bottom: -80px;
+      overflow: hidden;
+      background: #05070a;
     }
-
-    .hero-rip .rip-hole {
+    .rip-img {
       position: absolute;
-      inset: 0;
-    }
-
-    /* Key art, clipped to a wide torn-paper shape */
-    .hero-rip .rip-img {
-      position: absolute;
-      inset: -8%;
-      background-image: url('assets/images/c4s2-mega-keyart.webp');
+      left: 50%;
+      top: 50%;
+      width: calc(106vw + var(--rip-h) * 0.2);
+      height: calc(var(--rip-rise) * 106vw + var(--rip-h) * 1.05 + 36vh + 20px);
       background-size: cover;
-      background-position: center 35%;
-      will-change: background-position;
-      clip-path: polygon(
-        0% 12%,
-        1.5% 9.8%,  3% 12.8%, 4.5% 9.5%,  6% 12.5%, 7.5% 9.2%,
-        9% 12.2%,   10.5% 9%, 12% 12%,    13.5% 8.8%, 15% 11.8%,
-        16.5% 8.5%, 18% 11.5%,19.5% 8.2%, 21% 11.2%,  22.5% 8%,
-        24% 11%,    25.5% 7.8%,27% 10.8%, 28.5% 7.5%, 30% 10.5%,
-        31.5% 7.2%, 33% 10.2%, 34.5% 7%,  36% 10%,    37.5% 6.8%,
-        39% 9.8%,   40.5% 6.5%,42% 9.5%,  43.5% 6.2%, 45% 9.2%,
-        46.5% 6%,   48% 9%,    49.5% 5.8%,51% 8.8%,   52.5% 5.5%,
-        54% 8.5%,   55.5% 5.2%,57% 8.2%,  58.5% 5%,   60% 8%,
-        61.5% 4.8%, 63% 7.8%,  64.5% 4.5%,66% 7.5%,   67.5% 4.2%,
-        69% 7.2%,   70.5% 4%,  72% 7%,    73.5% 3.8%,  75% 6.8%,
-        76.5% 3.5%, 78% 6.5%,  79.5% 3.2%,81% 6.2%,   82.5% 3%,
-        84% 6%,     85.5% 2.8%,87% 5.8%,  88.5% 2.5%,  90% 5.5%,
-        91.5% 2.2%, 93% 5.2%,  94.5% 2%,  96% 5%,      97.5% 1.8%,
-        99% 4.5%,   100% 2%,
-        100% 98%,
-        98.5% 95.2%,97% 98.2%, 95.5% 95%, 94% 98%,    92.5% 94.8%,
-        91% 97.8%,  89.5% 94.5%,88% 97.5%,86.5% 94.2%,85% 97.2%,
-        83.5% 94%,  82% 97%,   80.5% 93.8%,79% 96.8%, 77.5% 93.5%,
-        76% 96.5%,  74.5% 93.2%,73% 96.2%,71.5% 93%,  70% 96%,
-        68.5% 92.8%,67% 95.8%, 65.5% 92.5%,64% 95.5%, 62.5% 92.2%,
-        61% 95.2%,  59.5% 92%, 58% 95%,   56.5% 91.8%,55% 94.8%,
-        53.5% 91.5%,52% 94.5%, 50.5% 91.2%,49% 94.2%, 47.5% 91%,
-        46% 94%,    44.5% 90.8%,43% 93.8%,41.5% 90.5%,40% 93.5%,
-        38.5% 90.2%,37% 93.2%, 35.5% 90%, 34% 93%,    32.5% 89.8%,
-        31% 92.8%,  29.5% 89.5%,28% 92.5%,26.5% 89.2%,25% 92.2%,
-        23.5% 89%,  22% 92%,   20.5% 88.8%,19% 91.8%, 17.5% 88.5%,
-        16% 91.5%,  14.5% 88.2%,13% 91.2%,11.5% 88%,  10% 91%,
-        8.5% 87.8%, 7% 90.8%,  5.5% 87.5%,4% 90.5%,   2.5% 87.2%,
-        1% 90.2%,   0% 88%
-      );
+      background-repeat: no-repeat;
+      transform: translate(-50%, -50%) rotate(calc(var(--rip-angle) * -1)) translateY(var(--rip-shift, 0px));
+      will-change: transform;
     }
-
-    /* Torn paper edge glow lines */
-    .hero-rip .rip-edges { position: absolute; inset: 0; pointer-events: none; }
-    .hero-rip .rip-edge {
+    .rip-edges {
       position: absolute;
-      left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg,
-        transparent 0%, rgba(0,212,255,0.35) 15%,
-        rgba(0,212,255,0.55) 50%, rgba(0,212,255,0.35) 85%, transparent 100%);
-      box-shadow: 0 0 8px rgba(0,212,255,0.25);
+      inset: 0;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55)) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35));
     }
-    .hero-rip .rip-edge--top    { top: 12%; }
-    .hero-rip .rip-edge--bottom { bottom: 2%; }
-
-    /* Vignette over the key art — keeps it moody, text readable */
-    .hero-rip .rip-vignette {
+    .rip-edge {
       position: absolute;
-      inset: -8%;
-      clip-path: polygon(
-        0% 12%,
-        1.5% 9.8%,  3% 12.8%, 4.5% 9.5%,  6% 12.5%, 7.5% 9.2%,
-        9% 12.2%,   10.5% 9%, 12% 12%,    13.5% 8.8%, 15% 11.8%,
-        16.5% 8.5%, 18% 11.5%,19.5% 8.2%, 21% 11.2%,  22.5% 8%,
-        24% 11%,    25.5% 7.8%,27% 10.8%, 28.5% 7.5%, 30% 10.5%,
-        31.5% 7.2%, 33% 10.2%, 34.5% 7%,  36% 10%,    37.5% 6.8%,
-        39% 9.8%,   40.5% 6.5%,42% 9.5%,  43.5% 6.2%, 45% 9.2%,
-        46.5% 6%,   48% 9%,    49.5% 5.8%,51% 8.8%,   52.5% 5.5%,
-        54% 8.5%,   55.5% 5.2%,57% 8.2%,  58.5% 5%,   60% 8%,
-        61.5% 4.8%, 63% 7.8%,  64.5% 4.5%,66% 7.5%,   67.5% 4.2%,
-        69% 7.2%,   70.5% 4%,  72% 7%,    73.5% 3.8%,  75% 6.8%,
-        76.5% 3.5%, 78% 6.5%,  79.5% 3.2%,81% 6.2%,   82.5% 3%,
-        84% 6%,     85.5% 2.8%,87% 5.8%,  88.5% 2.5%,  90% 5.5%,
-        91.5% 2.2%, 93% 5.2%,  94.5% 2%,  96% 5%,      97.5% 1.8%,
-        99% 4.5%,   100% 2%,
-        100% 98%,
-        98.5% 95.2%,97% 98.2%, 95.5% 95%, 94% 98%,    92.5% 94.8%,
-        91% 97.8%,  89.5% 94.5%,88% 97.5%,86.5% 94.2%,85% 97.2%,
-        83.5% 94%,  82% 97%,   80.5% 93.8%,79% 96.8%, 77.5% 93.5%,
-        76% 96.5%,  74.5% 93.2%,73% 96.2%,71.5% 93%,  70% 96%,
-        68.5% 92.8%,67% 95.8%, 65.5% 92.5%,64% 95.5%, 62.5% 92.2%,
-        61% 95.2%,  59.5% 92%, 58% 95%,   56.5% 91.8%,55% 94.8%,
-        53.5% 91.5%,52% 94.5%, 50.5% 91.2%,49% 94.2%, 47.5% 91%,
-        46% 94%,    44.5% 90.8%,43% 93.8%,41.5% 90.5%,40% 93.5%,
-        38.5% 90.2%,37% 93.2%, 35.5% 90%, 34% 93%,    32.5% 89.8%,
-        31% 92.8%,  29.5% 89.5%,28% 92.5%,26.5% 89.2%,25% 92.2%,
-        23.5% 89%,  22% 92%,   20.5% 88.8%,19% 91.8%, 17.5% 88.5%,
-        16% 91.5%,  14.5% 88.2%,13% 91.2%,11.5% 88%,  10% 91%,
-        8.5% 87.8%, 7% 90.8%,  5.5% 87.5%,4% 90.5%,   2.5% 87.2%,
-        1% 90.2%,   0% 88%
-      );
-      background: linear-gradient(180deg,
-        rgba(10,14,20,0.6) 0%,
-        rgba(10,14,20,0.05) 35%,
-        rgba(10,14,20,0.05) 65%,
-        rgba(10,14,20,0.6) 100%
-      );
-      pointer-events: none;
+      inset: 0;
+      background: linear-gradient(90deg, #d9e2ec, #eef3f8 30%, #cfd9e4 55%, #e8eef5 80%, #d4dde8);
+    }
+    .rip-edge--bottom { filter: brightness(0.82); }
+    .rip-fibre {
+      position: absolute;
+      inset: 0;
+      background: rgba(226, 232, 240, 0.28);
     }
 
-    /* Hero content sits above the tear */
-    .hero-inner {
+    /* The home page tear: 5deg, C4S2 MEGA key art */
+    .rip--four { --rip-angle: 5deg; --rip-rise: 0.0875; top: 28%; }
+    .rip--four .rip-img { background-image: url('assets/images/c4s2-mega-keyart.webp'); background-position: center 40%; }
+
+    /* On phones the About text is much taller, so a % position would hide
+       the whole tear behind the band — pin it near the top instead */
+    @media (max-width: 768px) {
+      .rip--four { top: 20px; }
+    }
+
+    /* The enquiry button under the tiles now sits on the tear art,
+       so give it a dark fill to keep it readable */
+    .credits-section .hero-cta {
+      background: rgba(10, 14, 20, 0.85);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+
+    /* Full-width frosted band behind the About text */
+    .about-band {
       position: relative;
       z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
+      background: rgba(10, 14, 20, 0.82);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0, 212, 255, 0.18);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.18);
     }
-
-    /* Frosted glass panel around the descriptive text only */
-    .hero-glass {
-      background: rgba(10, 14, 20, 0.68);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 212, 255, 0.2);
-      border-radius: 4px;
-      padding: 40px 52px 36px;
-      max-width: 780px;
-      width: calc(100% - 48px);
-      margin-top: 32px;
-      text-align: center;
-      box-shadow:
-        0 0 60px rgba(0, 212, 255, 0.07),
-        inset 0 1px 0 rgba(255,255,255,0.04);
-    }
-
-    @media (max-width: 700px) {
-      .hero-glass {
-        padding: 28px 24px;
-        margin-top: 20px;
-        width: calc(100% - 32px);
-      }
-    }
-
   </style>
+  <!-- Torn-paper shape for the About tear (kept separate and cached) -->
+  <link rel="stylesheet" href="assets/css/tear-c4s2.css">
 </head>
 
 <body>
@@ -1221,57 +1154,32 @@
     </ul>
   </div>
 
-  <!-- ── HERO SECTION — tear background + glass text panel ───────────────── -->
-  <div class="hero-rip-wrap">
-
-    <!-- Decorative tear: C4S2 MEGA key art revealed through a torn-paper cutout -->
-    <div class="hero-rip" aria-hidden="true">
-      <div class="rip-strip">
-        <div class="rip-hole">
-          <div class="rip-img"></div>
-          <div class="rip-vignette"></div>
-        </div>
-        <div class="rip-edges">
-          <div class="rip-edge rip-edge--top"></div>
-          <div class="rip-edge rip-edge--bottom"></div>
-        </div>
+  <header class="hero">
+    <div id="ias-logo">
+      <canvas id="ias-canvas" width="480" height="150"></canvas>
+      <div class="ias-rule"></div>
+      <div class="ias-wordmark">
+        <div class="ias-name">INTEGRAL AUDIO SOLUTIONS</div>
+        <div class="ias-sub">GAME AUDIO SPECIALISTS</div>
       </div>
     </div>
 
-    <header class="hero">
-      <!-- Logo sits above the glass panel, directly over the tear -->
-      <div class="hero-inner">
-        <div id="ias-logo">
-          <canvas id="ias-canvas" width="480" height="150"></canvas>
-          <div class="ias-rule"></div>
-          <div class="ias-wordmark">
-            <div class="ias-name">INTEGRAL AUDIO SOLUTIONS</div>
-            <div class="ias-sub">GAME AUDIO SPECIALISTS</div>
-          </div>
-        </div>
+    <div class="hero-copy">
+      <p class="hero-tagline">UK · Game Audio · AAA &amp; Indie</p>
 
-        <!-- Frosted glass panel: descriptor text sits on top of the key art -->
-        <div class="hero-glass">
-          <div class="hero-copy">
-            <p class="hero-tagline">UK · Game Audio · AAA &amp; Indie</p>
+      <h1 class="hero-headline">
+        Sound design that builds<br>
+        <span>worlds worth inhabiting.</span>
+      </h1>
 
-            <h1 class="hero-headline">
-              Sound design that builds<br>
-              <span>worlds worth inhabiting.</span>
-            </h1>
-
-            <p class="hero-body">
-              Integral Audio Solutions Ltd is a UK-based sound design studio with over a decade of experience
-              delivering audio for some of the world's most played video games. We specialise in world-building
-              environmental audio, technical sound implementation, and full pipeline integration — built for Unreal
-              Engine 5 and Wwise-powered productions at every scale.
-            </p>
-          </div>
-        </div>
-      </div><!-- /.hero-inner -->
-    </header>
-
-  </div><!-- /.hero-rip-wrap -->
+      <p class="hero-body">
+        Integral Audio Solutions Ltd is a UK-based sound design studio with over a decade of experience
+        delivering audio for some of the world's most played video games. We specialise in world-building
+        environmental audio, technical sound implementation, and full pipeline integration — built for Unreal
+        Engine 5 and Wwise-powered productions at every scale.
+      </p>
+    </div>
+  </header>
 
   <div class="credits-section" id="credits">
     <div class="credits-grid" id="credits-grid">
@@ -1510,6 +1418,21 @@
     </div>
   </div><!-- /credits-section -->
 
+  <!-- About: torn-paper strip behind, frosted full-width band in front -->
+  <div class="about-stage">
+    <div class="rip rip--four" aria-hidden="true">
+      <div class="rip-strip">
+        <div class="rip-hole"><div class="rip-img"></div></div>
+        <div class="rip-edges">
+          <div class="rip-fibre rip-fibre--top"></div>
+          <div class="rip-fibre rip-fibre--bottom"></div>
+          <div class="rip-edge rip-edge--top"></div>
+          <div class="rip-edge rip-edge--bottom"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-band">
   <section id="about">
     <div class="section-label">About</div>
     <div class="section-divider"></div>
@@ -1551,6 +1474,8 @@
       </div>
     </div>
   </section>
+    </div><!-- /.about-band -->
+  </div><!-- /.about-stage -->
 
   <div class="services-section">
     <div class="services-inner">
@@ -1941,6 +1866,53 @@
           if (r.top < innerHeight && r.bottom > 0) el.classList.add('rv-done');
         }
       }), 4000);
+    })();
+  </script>
+  <script>
+    /* ── Paper-tear parallax ──────────────────────────────────────
+       Moves the picture inside each tear at a fraction of the scroll
+       speed. Each tear only updates while it is near the screen, and
+       nothing moves for visitors who have asked for reduced motion. */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const RIP_SPEED = 0.3;    /* 0 = fixed to the page, 1 = stays still on screen */
+      const MAX_SHIFT = 0.18;   /* never move more than 18% of the screen height */
+
+      const tears = [...document.querySelectorAll('.rip')].map(band => ({
+        band, img: band.querySelector('.rip-img'), visible: false
+      }));
+      let ticking = false;
+
+      function update() {
+        ticking = false;
+        const limit = innerHeight * MAX_SHIFT;
+        tears.forEach(t => {
+          if (!t.visible) return;
+          const r = t.band.getBoundingClientRect();
+          /* distance between the tear's centre and the screen's centre */
+          const offset = (r.top + r.height / 2) - innerHeight / 2;
+          const shift = Math.max(-limit, Math.min(limit, -offset * RIP_SPEED));
+          t.img.style.setProperty('--rip-shift', shift.toFixed(1) + 'px');
+        });
+      }
+      function onScroll() {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      }
+
+      /* start tracking 300px before a tear scrolls into view,
+         so its picture is already in place when it appears */
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          const t = tears.find(x => x.band === e.target);
+          t.visible = e.isIntersecting;
+        });
+        update();
+      }, { rootMargin: '300px 0px' });
+      tears.forEach(t => io.observe(t.band));
+
+      addEventListener('scroll', onScroll, { passive: true });
+      addEventListener('resize', onScroll);
     })();
   </script>
 </body>
