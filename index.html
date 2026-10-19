@@ -1097,16 +1097,16 @@
     }
 
     /* The home page tear: 5deg, C4S2 MEGA key art */
-    .rip--four { --rip-angle: -5deg; --rip-rise: 0.0875; top: 300px; }   /* -5deg = higher on the right */
+    .rip--four { --rip-angle: -5deg; --rip-rise: 0.0875; top: 380px; }   /* -5deg = higher on the right; top edge clears the tiles */
     .rip--four .rip-img { background-image: url('assets/images/c4s2-mega-keyart.webp'); background-position: center 40%; }
 
     /* Desktop: a thick tear so it reaches from the second row of tiles
        down past the stats boxes, even with the tilt */
     @media (min-width: 769px) {
-      .rip--four { --rip-h: 940px; }
+      .rip--four { --rip-h: 850px; }
       /* extra room under the stats so the tear's lower (left) end
          finishes before the Services section */
-      .about-stage .about-stats-wrap { padding-bottom: 300px; }
+      .about-stage .about-stats-wrap { padding-bottom: calc(150px + 7.5vw); }   /* wider screen = bigger tilt drop */
     }
 
     /* Services section always sits above the tear */
@@ -1115,7 +1115,7 @@
     /* On phones the About text is much taller, so a % position would hide
        the whole tear behind the band — pin it near the top instead */
     @media (max-width: 768px) {
-      .rip--four { top: 20px; }
+      .rip--four { top: 60px; }   /* top edge sits just under the tiles */
     }
 
     /* The enquiry button under the tiles now sits on the tear art,
