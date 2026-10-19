@@ -1097,8 +1097,20 @@
     }
 
     /* The home page tear: 5deg, C4S2 MEGA key art */
-    .rip--four { --rip-angle: 5deg; --rip-rise: 0.0875; top: 28%; }
+    .rip--four { --rip-angle: -5deg; --rip-rise: 0.0875; top: 300px; }   /* -5deg = higher on the right */
     .rip--four .rip-img { background-image: url('assets/images/c4s2-mega-keyart.webp'); background-position: center 40%; }
+
+    /* Desktop: a thick tear so it reaches from the second row of tiles
+       down past the stats boxes, even with the tilt */
+    @media (min-width: 769px) {
+      .rip--four { --rip-h: 940px; }
+      /* extra room under the stats so the tear's lower (left) end
+         finishes before the Services section */
+      .about-stage .about-stats-wrap { padding-bottom: 300px; }
+    }
+
+    /* Services section always sits above the tear */
+    .services-section { position: relative; z-index: 1; }
 
     /* On phones the About text is much taller, so a % position would hide
        the whole tear behind the band — pin it near the top instead */
@@ -1112,6 +1124,29 @@
       background: rgba(10, 14, 20, 0.85);
       -webkit-backdrop-filter: blur(6px);
       backdrop-filter: blur(6px);
+    }
+
+    /* The band ends just under the About text */
+    .about-band #about { padding-bottom: 44px; }
+
+    /* Stats: frosted backing tight around the boxes only, so the
+       tear art shows clearly either side */
+    .about-stats-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 56px auto 0;
+      padding: 0 48px 96px;
+      box-sizing: content-box;
+    }
+    .about-stats-wrap .about-stats {
+      background: rgba(10, 14, 20, 0.82);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+    @media (max-width: 768px) {
+      .about-band #about { padding-bottom: 32px; }
+      .about-stats-wrap  { margin-top: 40px; padding: 0 20px 64px; }
     }
 
     /* Full-width frosted band behind the About text */
@@ -1454,6 +1489,13 @@
         </p>
       </div>
 
+    </div>
+  </section>
+    </div><!-- /.about-band -->
+
+    <!-- Stats sit outside the band, with their own tight frosted backing,
+         so the tear art shows either side of them -->
+    <div class="about-stats-wrap">
       <div class="about-stats">
         <div class="stat">
           <div class="stat-number">12+</div>
@@ -1473,8 +1515,6 @@
         </div>
       </div>
     </div>
-  </section>
-    </div><!-- /.about-band -->
   </div><!-- /.about-stage -->
 
   <div class="services-section">
