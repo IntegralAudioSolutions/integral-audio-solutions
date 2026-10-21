@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Phones: open at 100% (centred, no zooming out past the page edges)
+       and allow zooming in up to 2x for reading -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0">
 
   <!-- Scroll fade-ins: switch on early (before the page draws) so items
        start hidden instead of flashing visible then disappearing.
@@ -1024,16 +1026,17 @@
     /* =====================================================
        ABOUT SECTION — PAPER TEAR + FROSTED BAND
        One torn-paper strip (the C4S2 MEGA key art) runs behind the
-       About section, its top edge just cutting into the second row
-       of credit tiles. The About text sits on a full-width frosted
-       band so it stays readable over the art.
+       About section. Its top edge stays just below the credit tiles
+       (no overlap) and it rises to the right. The About text sits on a
+       full-width frosted band; the stats boxes have their own tight
+       frosted backing so the art shows either side of them.
 
        Built exactly like the projects page tears:
          .rip-hole   — the torn opening (ragged outline from tear-c4s2.css)
          .rip-img    — the picture; the script moves it via --rip-shift
          .rip-edges  — pale paper-fibre rims with a soft shadow
        Settings:
-         --rip-angle  tilt (positive = higher on the left)
+         --rip-angle  tilt (negative = higher on the right)
          --rip-rise   tan(angle) — 5deg = 0.0875
          --rip-h      thickness of the tear
          top          where the tear's centre line sits within .about-stage
@@ -1112,10 +1115,11 @@
     /* Services section always sits above the tear */
     .services-section { position: relative; z-index: 1; }
 
-    /* On phones the About text is much taller, so a % position would hide
-       the whole tear behind the band — pin it near the top instead */
+    /* Phones and tablets: no tear. The About text is too tall for the
+       art to read well, so the section shows on the plain background.
+       (A hidden tear's picture isn't downloaded, which also saves data.) */
     @media (max-width: 768px) {
-      .rip--four { top: 60px; }   /* top edge sits just under the tiles */
+      .rip { display: none; }
     }
 
     /* The enquiry button under the tiles now sits on the tear art,
@@ -1158,6 +1162,34 @@
       backdrop-filter: blur(10px);
       border-top: 1px solid rgba(0, 212, 255, 0.18);
       border-bottom: 1px solid rgba(0, 212, 255, 0.18);
+    }
+
+    /* =====================================================
+       PHONES — logo fits the screen, nav links stay visible
+       The logo box (480px waveform + padding) and the 600px glow
+       behind it used to make the page wider than a phone, which
+       pushed the nav off-screen and left an empty strip on the right
+       when zoomed out. Here both shrink to fit; the waveform still
+       draws at full detail, it's just displayed smaller.
+       ===================================================== */
+    @media (max-width: 700px) {
+      #ias-logo  { padding: 28px 12px 24px; max-width: 100%; box-sizing: border-box; }
+      #ias-canvas { width: 100%; max-width: 480px; height: auto; }
+      .ias-rule  { width: min(320px, 80%); }
+      .ias-name  { font-size: 11px; letter-spacing: 3px; }
+      .ias-sub   { font-size: 8px;  letter-spacing: 4px; }
+      /* the soft glow behind the logo is 600px wide — keep it inside the screen */
+      .hero::before { max-width: 100%; }
+
+      /* Show the four links across the top instead of the ☰ button */
+      nav { justify-content: center; padding: 14px 10px; }
+      .nav-links { display: flex; gap: 14px; }
+      .nav-links a { font-size: 10px; letter-spacing: 1.5px; }
+      .nav-burger { display: none; }
+    }
+    @media (max-width: 360px) {
+      .nav-links { gap: 10px; }
+      .nav-links a { font-size: 9px; letter-spacing: 1px; }
     }
   </style>
   <!-- Torn-paper shape for the About tear (kept separate and cached) -->

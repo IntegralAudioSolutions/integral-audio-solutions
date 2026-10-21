@@ -2,7 +2,9 @@
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Phones: open at 100% (centred, no zooming out past the page edges)
+       and allow zooming in up to 2x for reading -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0">
 
   <!-- Scroll fade-ins: switch on early (before the page draws) so items
        start hidden instead of flashing visible then disappearing.
@@ -587,16 +589,47 @@
       .page-intro { font-size: 16px; }
       .project-desc { font-size: 14.5px; }
     }
-    /* Phones — one card per row. With readable text, two narrow
-       columns made each description a long, thin strip. A single
-       full-width card also gives the key art room to breathe. */
+    /* Phones — two columns of compact cards. Each card shows the key
+       art, title and studio; the role and description stay hidden
+       until the card is tapped, when it widens across both columns
+       and opens up (tap again to close). Keeps the page short to
+       scroll without squeezing the description into a thin strip. */
     @media (max-width: 600px) {
-      .projects-grid { grid-template-columns: 1fr; }
+      /* dense: when a card opens to full width, the next card slides up
+         to fill the gap it leaves instead of leaving an empty slot */
+      .projects-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; grid-auto-flow: dense; }
       .project-img   { height: auto; aspect-ratio: 16 / 9; }
-      .project-body  { padding: 18px 18px 20px; gap: 8px; }
-      .project-title { font-size: 12px; }
-      .project-studio { font-size: 9px; }
-      .project-type  { font-size: 7px; padding: 4px 9px; bottom: 10px; left: 14px; }
+      .project-body  { padding: 10px 10px 12px; gap: 5px; }
+      .project-title { font-size: 9px; letter-spacing: 1px; }
+      .project-studio { font-size: 7px; letter-spacing: 1px; line-height: 1.5; }
+      .project-type  { display: none; }   /* too cramped on a half-width card */
+      .project-role,
+      .project-desc  { display: none; }
+
+      /* tap hint in the corner of each card */
+      .project-card { cursor: pointer; }
+      .project-body::after {
+        content: '+';
+        position: absolute;
+        right: 8px;
+        bottom: 6px;
+        font-family: var(--font-display);
+        font-size: 12px;
+        color: var(--cyan);
+        opacity: 0.7;
+      }
+      .project-body { position: relative; padding-right: 22px; }
+
+      /* opened card: full width, everything showing */
+      .project-card.is-open { grid-column: 1 / -1; border-color: rgba(0,212,255,0.35); }
+      .project-card.is-open .project-body { padding: 16px 18px 20px; gap: 8px; }
+      .project-card.is-open .project-title  { font-size: 12px; letter-spacing: 2px; }
+      .project-card.is-open .project-studio { font-size: 9px; letter-spacing: 2px; }
+      .project-card.is-open .project-role,
+      .project-card.is-open .project-desc   { display: block; }
+      .project-card.is-open .project-type   { display: block; font-size: 7px; padding: 4px 9px; bottom: 10px; left: 14px; }
+      .project-card.is-open .project-body::after { content: '\2212'; }   /* minus sign */
+      .project-card.is-open .project-art { object-fit: cover; }
     }
     /* =====================================================
        FOOTER — company details, page links and enquiries
@@ -762,12 +795,16 @@
                   translate 0.68s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
     /* =====================================================
-       PAPER-TEAR PARALLAX BANDS (Projects page only)
-       Three strips torn through the page behind the project
+       PAPER-TEAR PARALLAX BANDS (Projects page)
+       Four strips torn through the page behind the project
        cards, each revealing a different piece of key art:
          Tear one   — 7deg,  C5S1 Big Bang,      near the top
-         Tear two   — 5deg,  C4S1 key art,       about a third down
-         Tear three — 2deg,  The Ascent key art (logo trimmed off), near the bottom
+         Tear two   — 5deg,  C4S1 key art,       about a quarter down
+         Tear three — 2deg,  The Ascent key art (logo trimmed off), halfway
+         Tear four  — 5deg,  C4S2 MEGA key art,  near the bottom
+       The torn outlines live in ../assets/css/tears.css (tears one to
+       three) and ../assets/css/tear-c4s2.css (tear four, shared with
+       the home page) so the browser can cache them.
        The art inside each tear moves more slowly than the page
        as you scroll (parallax), so it feels further back.
 
@@ -869,11 +906,10 @@
     .rip--three .rip-img       { background-image: url('../assets/images/projects-rip-ascent.webp'); background-position: center 40%; }
 
 
-    /* ── Tear four — same angle/direction as tear two, C4S2 MEGA key art ── */
+    /* Tear four: 5deg — higher on the left (same as tear two), C4S2 MEGA key art */
     .rip--four { --rip-angle: 5deg; --rip-rise: 0.0875; top: 81%; }
     .rip--four .rip-img       { background-image: url('../assets/images/c4s2-mega-keyart.webp'); background-position: center 40%; }
 
-    /* Tear three: 2deg — higher on the right */
     /* Screens 1400px wide or less (laptops, tablets, phones) load the
        lighter 1440px versions; bigger monitors get the full-size art
        (2560–3200px, AI-upscaled from the originals with Real-ESRGAN). */
@@ -1874,6 +1910,30 @@
 
       addEventListener('scroll', onScroll, { passive: true });
       addEventListener('resize', onScroll);
+    })();
+  </script>
+
+  <script>
+    /* ── Phones: tap a project card to open/close its details ──
+       Only active at 600px wide or less (matches the CSS above).
+       Opening one card closes any other that was open. */
+    (function () {
+      const phone = window.matchMedia('(max-width: 600px)');
+      const cards = document.querySelectorAll('.project-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          if (!phone.matches) return;
+          const open = card.classList.contains('is-open');
+          cards.forEach(c => c.classList.remove('is-open'));
+          if (!open) {
+            card.classList.add('is-open');
+            /* bring the opened card into view (it may jump to a new row) */
+            setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+          }
+        });
+      });
+      /* tidy up if the screen is rotated or resized past the breakpoint */
+      phone.addEventListener('change', e => { if (!e.matches) cards.forEach(c => c.classList.remove('is-open')); });
     })();
   </script>
 </body>
