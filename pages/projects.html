@@ -966,6 +966,33 @@
     @media (max-width: 768px) {
       .project-art { object-fit: contain; }   /* matches the old "show full key art" rule */
     }
+
+    /* =====================================================
+       BACK BUTTON — phones only
+       Sits top-left, opposite the ☰ button, and matches it.
+       Works like the browser's own back button; if there is
+       nothing to go back to (e.g. the page was opened from a
+       shared link), it goes to the home page instead.
+       Hidden on desktop.
+       ===================================================== */
+    .nav-back { display: none; }
+    @media (max-width: 700px) {
+      nav { justify-content: space-between; }
+      .nav-back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--cyan);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .nav-back:active { background: rgba(0, 212, 255, 0.08); }
+    }
   </style>
   <!-- Torn-paper shapes (large, so kept in a separate cached file) -->
   <link rel="stylesheet" href="../assets/css/tears.css">
@@ -976,6 +1003,10 @@
 
   <!-- NAV -->
   <nav>
+    <!-- Back button: phones only (hidden on desktop by CSS) -->
+    <button class="nav-back" id="nav-back" type="button" aria-label="Go back">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
@@ -1935,6 +1966,19 @@
       /* tidy up if the screen is rotated or resized past the breakpoint */
       phone.addEventListener('change', e => { if (!e.matches) cards.forEach(c => c.classList.remove('is-open')); });
     })();
+  </script>
+
+  <script>
+    /* ── Back button (phones only) ───────────────────────────
+       Same as the browser's back button. If this page is the
+       first one in the tab's history, go to the home page. */
+    document.getElementById('nav-back').addEventListener('click', () => {
+      if (history.length > 1) {
+        history.back();
+      } else {
+        location.href = '../index.html';
+      }
+    });
   </script>
 </body>
 </html>

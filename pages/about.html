@@ -804,6 +804,33 @@
       transition: opacity 0.68s cubic-bezier(0.2, 0.7, 0.2, 1),
                   translate 0.68s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
+
+    /* =====================================================
+       BACK BUTTON — phones only
+       Sits top-left, opposite the ☰ button, and matches it.
+       Works like the browser's own back button; if there is
+       nothing to go back to (e.g. the page was opened from a
+       shared link), it goes to the home page instead.
+       Hidden on desktop.
+       ===================================================== */
+    .nav-back { display: none; }
+    @media (max-width: 700px) {
+      nav { justify-content: space-between; }
+      .nav-back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--cyan);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .nav-back:active { background: rgba(0, 212, 255, 0.08); }
+    }
   </style>
 </head>
 
@@ -811,6 +838,10 @@
 
   <!-- NAV -->
   <nav>
+    <!-- Back button: phones only (hidden on desktop by CSS) -->
+    <button class="nav-back" id="nav-back" type="button" aria-label="Go back">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
@@ -866,8 +897,8 @@
         <div class="stat-label">Published title credits</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">AAA</div>
-        <div class="stat-label">To Indie — full spectrum</div>
+        <div class="stat-number">28+</div>
+        <div class="stat-label">Fortnite seasons shipped</div>
       </div>
       <div class="stat-item">
         <div class="stat-number">UE5</div>
@@ -1077,6 +1108,19 @@
         }
       }), 4000);
     })();
+  </script>
+
+  <script>
+    /* ── Back button (phones only) ───────────────────────────
+       Same as the browser's back button. If this page is the
+       first one in the tab's history, go to the home page. */
+    document.getElementById('nav-back').addEventListener('click', () => {
+      if (history.length > 1) {
+        history.back();
+      } else {
+        location.href = '../index.html';
+      }
+    });
   </script>
 </body>
 </html>
