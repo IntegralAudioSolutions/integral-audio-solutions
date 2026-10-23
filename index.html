@@ -1670,9 +1670,9 @@
     /* Whole wave cycles played before settling. The wave repeats every 2π, so
        it starts AND finishes on the exact shape of the still logo. Keep this
        a whole number. With a constant speed, the scroll lasts
-       ANIM_CYCLES x 2π / SCROLL_SPEED  (4 cycles at 2.7x = about 7.0 s),
-       then the laser trace (1 s) and fade (0.7 s) follow: about 8.75 s in total. */
-    const ANIM_CYCLES  = 4;
+       ANIM_CYCLES x 2π / SCROLL_SPEED  (3 cycles at 2.7x = about 5.3 s),
+       then the laser trace (1 s) and fade (0.7 s) follow: about 7 s in total. */
+    const ANIM_CYCLES  = 3;
 
     /* --------------------------------------------------
        BUILD WAVE POINTS
