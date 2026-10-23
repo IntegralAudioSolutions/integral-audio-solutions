@@ -1659,10 +1659,18 @@
     -------------------------------------------------- */
     const FREQ         = 1.25;
     const TARGET_T_MOD = Math.PI * 0.75;
-    const STEP         = 0.022;
-    const FREEZE_AFTER = 5000;
-    const TOLERANCE    = STEP * 0.6;
-    const sharedStart  = performance.now();
+    const STEP         = 0.022;   /* scroll speed per frame at 60fps — do not change */
+
+    /* Scroll speed in radians per millisecond. Using real time (not frames)
+       means the animation runs at the same pace on 60Hz, 120Hz and 144Hz
+       monitors, and the end point is exact on all of them. */
+    const SCROLL_SPEED = STEP * 60 / 1000;
+
+    /* How many FULL wave cycles the animation plays before settling.
+       One cycle = 2π / SCROLL_SPEED ≈ 4.8 seconds. Because the wave repeats
+       every 2π, it starts AND finishes on the exact shape of the still logo.
+       Want it to run longer? Change to 2 (≈ 9.5 seconds). Whole numbers only. */
+    const ANIM_CYCLES  = 1;
 
     /* --------------------------------------------------
        BUILD WAVE POINTS
@@ -1763,57 +1771,58 @@
        MAIN LOGO LOOP
        Four phases:
        1. animating — wave scrolls, laser sits at left edge (pos 0)
-       2. tracing   — 1s before freeze, laser travels 0→1 across wave
-       3. fading    — wave frozen at target, laser fades out from pos 1
+       2. tracing   — wave has settled on the still shape, laser travels 0→1
+       3. fading    — wave still, laser fades out from pos 1
        4. frozen    — static wave, no laser
+
+       Seamless handover: the wave starts at t = TARGET_T_MOD (the shape of
+       the finished still) and runs a whole number of 2π cycles, so the first
+       frame, the last animated frame and the still are all identical.
     -------------------------------------------------- */
     function makeLogoLoop(canvasId, amp, leftFrac, rightFrac) {
       const cvs = document.getElementById(canvasId);
       if (!cvs) return;
       const ctx = cvs.getContext('2d');
       const cW = cvs.width, cH = cvs.height;
-      let t = 0;
-      let frozenT    = null; /* t value locked when tracing starts */
+      const T_START = TARGET_T_MOD;                          /* same shape as the still */
+      const T_END   = TARGET_T_MOD + ANIM_CYCLES * Math.PI * 2; /* same shape again, N cycles later */
       let phase      = 'animating';
       let laserPos   = 0;
       let laserAlpha = 1.0;
+      let animStart  = null;   /* set on the first frame, so page-load delay can't eat the animation */
       let traceStart = null;
       let fadeStart  = null;
       const TRACE_DURATION = 1000;
       const FADE_DURATION  = 700;
-      const TRACE_START_AT = FREEZE_AFTER - TRACE_DURATION;
+
+      /* Draws the settled still shape. T_END and TARGET_T_MOD look identical
+         (sin repeats every 2π); using TARGET_T_MOD keeps it exactly the still. */
+      function drawStill(pos, alpha) {
+        drawPts(ctx, buildPts(TARGET_T_MOD, cW, cH, amp, leftFrac, rightFrac),
+                cW, cH, leftFrac, rightFrac, pos, alpha);
+      }
 
       function loop(now) {
-        const elapsed = now - sharedStart;
+        if (animStart === null) animStart = now;
 
         if (phase === 'animating') {
-          t += STEP;
+          const t = Math.min(T_END, T_START + (now - animStart) * SCROLL_SPEED);
           drawPts(ctx, buildPts(t, cW, cH, amp, leftFrac, rightFrac),
                   cW, cH, leftFrac, rightFrac, 0, laserAlpha);
 
-          if (elapsed >= TRACE_START_AT) {
-            /* Find the nearest TARGET_T_MOD frame to current t
-               so frozenT IS the final frame — no snap at end of trace */
-            const twoPi   = Math.PI * 2;
-            const cycles  = Math.floor(t / twoPi);
-            /* Check this cycle and next to find closest */
-            const c1 = cycles * twoPi + TARGET_T_MOD;
-            const c2 = (cycles + 1) * twoPi + TARGET_T_MOD;
-            frozenT    = (Math.abs(c1 - t) < Math.abs(c2 - t)) ? c1 : c2;
+          if (t >= T_END) {
+            /* Wave has landed exactly on the still shape — no snap */
             phase      = 'tracing';
             traceStart = now;
           }
 
         } else if (phase === 'tracing') {
-          /* Wave is frozen — laser travels across the static shape */
+          /* Wave is settled — laser travels across the static shape */
           const tp = Math.min(1, (now - traceStart) / TRACE_DURATION);
           laserPos = tp;
-
-          drawPts(ctx, buildPts(frozenT, cW, cH, amp, leftFrac, rightFrac),
-                  cW, cH, leftFrac, rightFrac, laserPos, laserAlpha);
+          drawStill(laserPos, laserAlpha);
 
           if (tp >= 1) {
-            /* frozenT already set to target frame — just transition to fading */
             phase     = 'fading';
             fadeStart = now;
             laserPos  = 1;
@@ -1822,13 +1831,11 @@
         } else if (phase === 'fading') {
           const fp = Math.min(1, (now - fadeStart) / FADE_DURATION);
           laserAlpha = 1 - fp;
-          drawPts(ctx, buildPts(frozenT, cW, cH, amp, leftFrac, rightFrac),
-                  cW, cH, leftFrac, rightFrac, laserPos, laserAlpha);
+          drawStill(laserPos, laserAlpha);
 
           if (fp >= 1) {
             phase = 'frozen';
-            drawPts(ctx, buildPts(frozenT, cW, cH, amp, leftFrac, rightFrac),
-                    cW, cH, leftFrac, rightFrac, 1, 0);
+            drawStill(1, 0);
             return;
           }
 
@@ -1838,6 +1845,10 @@
 
         requestAnimationFrame(loop);
       }
+
+      /* Draw the still shape straight away so there is never a blank or
+         wrong-shaped frame before the first animation frame arrives. */
+      drawStill(0, laserAlpha);
       requestAnimationFrame(loop);
     }
 
