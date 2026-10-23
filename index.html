@@ -1661,15 +1661,20 @@
     const TARGET_T_MOD = Math.PI * 0.75;
     const STEP         = 0.022;   /* scroll speed per frame at 60fps — do not change */
 
-    /* Scroll speed in radians per millisecond. Using real time (not frames)
-       means the animation runs at the same pace on 60Hz, 120Hz and 144Hz
-       monitors, and the end point is exact on all of them. */
-    const SCROLL_SPEED = STEP * 60 / 1000;
+    /* Scroll speed in radians per millisecond, 25% faster than the original
+       signed-off pace. Using real time (not frames) means the animation runs
+       at the same pace on 60Hz, 120Hz and 144Hz monitors. */
+    const SPEED_BOOST  = 1.25;
+    const SCROLL_SPEED = STEP * 60 / 1000 * SPEED_BOOST;
 
-    /* How many FULL wave cycles the animation plays before settling.
-       One cycle = 2π / SCROLL_SPEED ≈ 4.8 seconds. Because the wave repeats
-       every 2π, it starts AND finishes on the exact shape of the still logo.
-       Want it to run longer? Change to 2 (≈ 9.5 seconds). Whole numbers only. */
+    /* TOTAL_MS is the whole animation, from the first frame until the logo is
+       completely still (wave + laser trace + laser fade). Change this number
+       to make the whole thing longer or shorter — the code works out the rest. */
+    const TOTAL_MS     = 7000;
+
+    /* Whole wave cycles played before settling. The wave repeats every 2π, so
+       it starts AND finishes on the exact shape of the still logo. Keep this
+       a whole number. */
     const ANIM_CYCLES  = 1;
 
     /* --------------------------------------------------
@@ -1785,7 +1790,6 @@
       const ctx = cvs.getContext('2d');
       const cW = cvs.width, cH = cvs.height;
       const T_START = TARGET_T_MOD;                          /* same shape as the still */
-      const T_END   = TARGET_T_MOD + ANIM_CYCLES * Math.PI * 2; /* same shape again, N cycles later */
       let phase      = 'animating';
       let laserPos   = 0;
       let laserAlpha = 1.0;
@@ -1795,7 +1799,25 @@
       const TRACE_DURATION = 1000;
       const FADE_DURATION  = 700;
 
-      /* Draws the settled still shape. T_END and TARGET_T_MOD look identical
+      /* Time available for the scrolling wave itself. */
+      const ANIM_MS   = TOTAL_MS - TRACE_DURATION - FADE_DURATION;
+      /* Distance (radians) the wave must travel to land back on the still shape. */
+      const DISTANCE  = ANIM_CYCLES * Math.PI * 2;
+      /* The wave cruises at full speed, then slows smoothly to a stop.
+         Solve for how long the slow-down lasts so that the distance and the
+         total time both come out exactly right (kept within 0 – ANIM_MS). */
+      const DECEL_MS  = Math.min(ANIM_MS, Math.max(0, 2 * (ANIM_MS - DISTANCE / SCROLL_SPEED)));
+      const CRUISE_MS = ANIM_MS - DECEL_MS;
+
+      /* Radians travelled after 'ms' milliseconds of animation. */
+      function travelled(ms) {
+        if (ms >= ANIM_MS) return DISTANCE;
+        if (ms <= CRUISE_MS) return SCROLL_SPEED * ms;
+        const d = ms - CRUISE_MS;
+        return SCROLL_SPEED * (CRUISE_MS + d - (d * d) / (2 * DECEL_MS));
+      }
+
+      /* Draws the settled still shape. The end of the animation and TARGET_T_MOD look identical
          (sin repeats every 2π); using TARGET_T_MOD keeps it exactly the still. */
       function drawStill(pos, alpha) {
         drawPts(ctx, buildPts(TARGET_T_MOD, cW, cH, amp, leftFrac, rightFrac),
@@ -1806,11 +1828,11 @@
         if (animStart === null) animStart = now;
 
         if (phase === 'animating') {
-          const t = Math.min(T_END, T_START + (now - animStart) * SCROLL_SPEED);
+          const t = T_START + travelled(now - animStart);
           drawPts(ctx, buildPts(t, cW, cH, amp, leftFrac, rightFrac),
                   cW, cH, leftFrac, rightFrac, 0, laserAlpha);
 
-          if (t >= T_END) {
+          if (now - animStart >= ANIM_MS) {
             /* Wave has landed exactly on the still shape — no snap */
             phase      = 'tracing';
             traceStart = now;
