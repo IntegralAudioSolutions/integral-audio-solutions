@@ -1661,17 +1661,17 @@
     const TARGET_T_MOD = Math.PI * 0.75;
 
     /* Scroll speed. 1 = the original signed-off pace (1.32 radians per second).
-       Currently 1.5625 = original pace made 25% faster, twice over (1.25 x 1.25).
-       The speed is constant from the first frame to the last. Using real time
-       (not frames) keeps it identical on 60Hz, 120Hz and 144Hz monitors. */
-    const SPEED_BOOST  = 1.5625;
+       1.8 = 80% faster than the original. The speed is constant from the first
+       frame to the last. Using real time (not frames) keeps it identical on
+       60Hz, 120Hz and 144Hz monitors. */
+    const SPEED_BOOST  = 1.8;
     const SCROLL_SPEED = 0.022 * 60 / 1000 * SPEED_BOOST;   /* radians per millisecond */
 
     /* Whole wave cycles played before settling. The wave repeats every 2π, so
        it starts AND finishes on the exact shape of the still logo. Keep this
        a whole number. With a constant speed, the scroll lasts
-       ANIM_CYCLES x 2π / SCROLL_SPEED  (2 cycles at this speed = about 6.1 s),
-       then the laser trace (1 s) and fade (0.7 s) follow. */
+       ANIM_CYCLES x 2π / SCROLL_SPEED  (2 cycles at 1.8x = about 5.3 s),
+       then the laser trace (1 s) and fade (0.7 s) follow: about 7 s in total. */
     const ANIM_CYCLES  = 2;
 
     /* --------------------------------------------------
